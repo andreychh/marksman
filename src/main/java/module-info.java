@@ -1,8 +1,9 @@
 module com.andreychh.marksman {
     requires javafx.controls;
     requires javafx.fxml;
+    requires org.locationtech.jts;
 
 
-    opens com.andreychh.marksman to javafx.fxml;
-    exports com.andreychh.marksman;
+    exports com.andreychh.marksman.client;
+    opens com.andreychh.marksman.client to javafx.fxml;
 }

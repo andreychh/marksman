@@ -1,4 +1,4 @@
-package com.andreychh.marksman;
+package com.andreychh.marksman.client;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
