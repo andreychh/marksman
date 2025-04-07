@@ -1,6 +1,13 @@
 name: Java CI
 
-on: [ push, pull_request ]
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -10,8 +17,10 @@ jobs:
         include:
           - os: ubuntu-latest
             maven_command: "./mvnw"
+
           - os: windows-latest
             maven_command: "./mvnw.cmd"
+
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
