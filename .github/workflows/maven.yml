@@ -6,18 +6,18 @@ jobs:
   build:
     strategy:
       matrix:
-        os:
-          - ubuntu-latest
-          - windows-latest
-        maven_command:
-          - ./mvnw
-          - ./mvnw.cmd
+        os: [ ubuntu-latest, windows-latest ]
+        include:
+          - os: ubuntu-latest
+            maven_command: "./mvnw"
+          - os: windows-latest
+            maven_command: "./mvnw.cmd"
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK 23
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           java-version: 23
