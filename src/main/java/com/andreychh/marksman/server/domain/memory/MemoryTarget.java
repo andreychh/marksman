@@ -1,16 +1,16 @@
 package com.andreychh.marksman.server.domain.memory;
 
-import com.andreychh.marksman.server.Point;
+import com.andreychh.marksman.common.geometry.Point;
 import com.andreychh.marksman.server.domain.Target;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Polygon;
 
-public class MemoryTarget implements Target {
+public final class MemoryTarget implements Target {
     private final int id;
     private final DataSource dataSource;
 
-    public MemoryTarget(int id, DataSource dataSource) {
+    public MemoryTarget(final int id, final DataSource dataSource) {
         this.id = id;
         this.dataSource = dataSource;
     }
@@ -21,7 +21,7 @@ public class MemoryTarget implements Target {
     }
 
     @Override
-    public void onFieldEscape() {
+    public void changeDirection() {
         this.dataSource.targetData().get(this.id).direction = this.direction().negate();
     }
 

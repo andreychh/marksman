@@ -1,17 +1,17 @@
 package com.andreychh.marksman.server.domain.memory;
 
-import com.andreychh.marksman.server.Point;
+import com.andreychh.marksman.common.geometry.Point;
 
 import java.util.HashMap;
 import java.util.Map;
 
 class TargetData {
-    public int id;
-    public Point center;
-    public double radius;
-    public Point direction;
+    int id;
+    Point center;
+    double radius;
+    Point direction;
 
-    public TargetData(int id, Point center, double radius, Point direction) {
+    TargetData(final int id, final Point center, final double radius, final Point direction) {
         this.id = id;
         this.center = center;
         this.radius = radius;
@@ -20,21 +20,21 @@ class TargetData {
 }
 
 class FieldData {
-    public int id;
-    public Point center;
-    public Point size;
+    int id;
+    Point center;
+    Point size;
 
-    public FieldData(int id, Point center, Point size) {
+    FieldData(final int id, final Point center, final Point size) {
         this.id = id;
         this.center = center;
         this.size = size;
     }
 }
 
-public class DataSource {
-    private int id;
+public final class DataSource {
     private final Map<Integer, TargetData> targetData;
     private final Map<Integer, FieldData> fieldData;
+    private int id;
 
     public DataSource() {
         this.id = 0;
@@ -42,21 +42,21 @@ public class DataSource {
         this.fieldData = new HashMap<>();
     }
 
-    public Map<Integer, TargetData> targetData() {
+    Map<Integer, TargetData> targetData() {
         return this.targetData;
     }
 
-    public int addTarget(Point center, double radius, Point direction) {
+    int addTarget(final Point center, final double radius, final Point direction) {
         this.id += 1;
         this.targetData.put(id, new TargetData(id, center, radius, direction));
         return id;
     }
 
-    public Map<Integer, FieldData> fieldData() {
+    Map<Integer, FieldData> fieldData() {
         return this.fieldData;
     }
 
-    public int addField(Point center, Point size) {
+    int addField(final Point center, final Point size) {
         this.id += 1;
         this.fieldData.put(id, new FieldData(id, center, size));
         return id;

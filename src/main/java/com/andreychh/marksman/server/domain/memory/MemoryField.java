@@ -1,16 +1,16 @@
 package com.andreychh.marksman.server.domain.memory;
 
-import com.andreychh.marksman.server.Point;
+import com.andreychh.marksman.common.geometry.Point;
 import com.andreychh.marksman.server.domain.Geometry;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Polygon;
 
-public class MemoryField implements Geometry {
+public final class MemoryField implements Geometry {
     private final int id;
     private final DataSource dataSource;
 
-    public MemoryField(int id, DataSource dataSource) {
+    public MemoryField(final int id, final DataSource dataSource) {
         this.id = id;
         this.dataSource = dataSource;
     }
