@@ -5,11 +5,11 @@ import org.locationtech.jts.geom.Polygon;
 
 import java.io.OutputStream;
 
-public class TransmittableTarget implements Target {
+public final class TransmittableTarget implements Target {
     private final Target origin;
     private final OutputStream outputStream;
 
-    public TransmittableTarget(Target origin, OutputStream outputStream) {
+    public TransmittableTarget(final Target origin, final OutputStream outputStream) {
         this.origin = origin;
         this.outputStream = outputStream;
     }
@@ -21,8 +21,8 @@ public class TransmittableTarget implements Target {
     }
 
     @Override
-    public void onFieldEscape() {
-        this.origin.onFieldEscape();
+    public void changeDirection() {
+        this.origin.changeDirection();
     }
 
     @Override
@@ -31,5 +31,6 @@ public class TransmittableTarget implements Target {
     }
 
     private void update() {
+        throw new RuntimeException("Not implemented yet");
     }
 }

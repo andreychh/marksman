@@ -1,14 +1,14 @@
 package com.andreychh.marksman.server.domain.memory;
 
-import com.andreychh.marksman.server.Point;
+import com.andreychh.marksman.common.geometry.Point;
 import com.andreychh.marksman.server.domain.Targets;
 
 import java.util.List;
 
-public class MemoryTargets implements Targets {
+public final class MemoryTargets implements Targets {
     private final DataSource dataSource;
 
-    public MemoryTargets(DataSource dataSource) {
+    public MemoryTargets(final DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -17,12 +17,12 @@ public class MemoryTargets implements Targets {
         return this.dataSource.targetData()
                 .values()
                 .stream()
-                .map(targetData -> new MemoryTarget(targetData.id, dataSource))
+                .map(t -> new MemoryTarget(t.id, dataSource))
                 .toList();
     }
 
     @Override
-    public MemoryTarget add(Point center, double radius, Point direction) {
+    public MemoryTarget add(final Point center, final double radius, final Point direction) {
         int id = this.dataSource.addTarget(center, radius, direction);
         return new MemoryTarget(id, dataSource);
     }
