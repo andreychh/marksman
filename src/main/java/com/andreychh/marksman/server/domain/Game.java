@@ -1,6 +1,7 @@
-package com.andreychh.marksman.server;
+package com.andreychh.marksman.server.domain;
 
-public class Game {
+// todo: rename
+public final class Game {
     private enum State {
         START,
         PLAYING,
@@ -13,7 +14,7 @@ public class Game {
 
     private final Environment environment;
 
-    public Game(Environment environment) {
+    public Game(final Environment environment) {
         this.environment = environment;
         this.state = State.START;
     }

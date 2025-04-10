@@ -1,6 +1,6 @@
 package com.andreychh.marksman.server.domain;
 
-import com.andreychh.marksman.server.Point;
+import com.andreychh.marksman.common.geometry.Point;
 
 import java.util.List;
 

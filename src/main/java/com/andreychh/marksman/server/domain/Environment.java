@@ -1,16 +1,14 @@
-package com.andreychh.marksman.server;
+package com.andreychh.marksman.server.domain;
 
-import com.andreychh.marksman.server.domain.Target;
-import com.andreychh.marksman.server.domain.Targets;
 import com.andreychh.marksman.server.domain.memory.MemoryField;
 
-public class Environment {
+public final class Environment {
     private final Targets targets;
-    private final MemoryField memoryField;
+    private final MemoryField field;
 
-    public Environment(Targets targets, MemoryField memoryField) {
+    public Environment(final Targets targets, final MemoryField field) {
         this.targets = targets;
-        this.memoryField = memoryField;
+        this.field = field;
     }
 
     public void next() {
@@ -26,8 +24,8 @@ public class Environment {
 
     private void checkCollisions() {
         for (Target t : this.targets.targets()) {
-            if (!this.memoryField.contains(t)) {
-                t.onFieldEscape();
+            if (!this.field.contains(t)) {
+                t.changeDirection();
             }
         }
     }
