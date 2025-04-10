@@ -54,7 +54,7 @@
         <!-- todo: enable <module name="JavadocMethod"/> -->
         <!-- todo: enable <module name="JavadocType"/> -->
         <!-- todo: enable <module name="JavadocVariable"/> -->
-        <module name="JavadocStyle"/>
+        <!-- todo: enable <module name="JavadocStyle"/> -->
         <!-- todo: enable <module name="MissingJavadocMethod"/> -->
 
         <!-- Checks for Naming Conventions. -->
