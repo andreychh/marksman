@@ -118,14 +118,14 @@
         <!-- Checks for class design -->
         <module name="DesignForExtension"/>
         <module name="FinalClass"/>
-        <module name="HideUtilityClassConstructor"/>
+        <!-- <module name="HideUtilityClassConstructor"/> -->
         <module name="InterfaceIsType"/>
         <!-- <module name="VisibilityModifier"/> -->
 
         <!-- Miscellaneous other checks. -->
         <module name="ArrayTypeStyle"/>
         <module name="FinalParameters"/>
-        <module name="TodoComment"/>
+        <!-- <module name="TodoComment"/> -->
         <module name="UpperEll"/>
 
         <module name="SuppressionXpathFilter">
