@@ -3,7 +3,8 @@ package com.andreychh.marksman.server.domain.memory;
 import com.andreychh.marksman.common.geometry.Point;
 
 /**
- * This is redundant as a single game field is usually used. It is utilized for consistency when creating objects for Environment.
+ * This is redundant as a single game field is usually used. It is utilized for
+ * consistency when creating objects for Environment.
  */
 public final class MemoryFields {
     private final DataSource dataSource;
