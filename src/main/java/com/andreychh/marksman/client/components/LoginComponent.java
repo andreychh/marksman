@@ -16,6 +16,7 @@ public final class LoginComponent {
 
     @FXML
     private TextField nameTextField;
+    @FXML
     private Label errorLabel;
 
     public LoginComponent(final OutputStream outputStream, final MessageDispatcher messageDispatcher) {
@@ -28,7 +29,7 @@ public final class LoginComponent {
         try {
             new Message()
                     .with("action", "lobby.join")
-                    .with("player.name", this.nameTextFiled.getText())
+                    .with("player.name", this.nameTextField.getText())
                     .writeTo(this.outputStream);
         } catch (IOException e) {
             throw new RuntimeException(e);

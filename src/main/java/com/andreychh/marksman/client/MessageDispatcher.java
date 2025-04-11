@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// todo: MessageBroker has -er suffix
+// todo: MessageDispatcher has -er suffix
 public final class MessageDispatcher implements MessageHandler {
     private final Map<String, List<MessageHandler>> handlers = new HashMap<>();
 

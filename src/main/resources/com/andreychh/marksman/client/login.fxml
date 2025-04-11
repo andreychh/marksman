@@ -12,7 +12,7 @@
         <HBox alignment="CENTER" prefHeight="40.0" prefWidth="380.0" spacing="10.0">
             <children>
                 <Label text="name:"/>
-                <TextField fx:id="nameTextFiled" prefHeight="25.0" prefWidth="120.0"/>
+                <TextField fx:id="nameTextField" prefHeight="25.0" prefWidth="120.0"/>
                 <Button mnemonicParsing="false" onAction="#onJoinLobbyButtonAction" text="Enter"/>
             </children>
         </HBox>
