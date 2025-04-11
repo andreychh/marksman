@@ -15,8 +15,7 @@ public final class LoginComponent {
     private final MessageDispatcher messageDispatcher;
 
     @FXML
-    private TextField nameTextFiled;
-    @FXML
+    private TextField nameTextField;
     private Label errorLabel;
 
     public LoginComponent(final OutputStream outputStream, final MessageDispatcher messageDispatcher) {
