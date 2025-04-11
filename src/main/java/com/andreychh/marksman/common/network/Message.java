@@ -8,14 +8,11 @@ import java.util.stream.Collectors;
 
 
 public final class Message {
-
     private final Map<String, String> args;
-
 
     public Message() {
         this.args = new HashMap<>();
     }
-
 
     public Message with(final String name, final String value) {
         args.put(name, value);
