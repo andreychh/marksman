@@ -21,7 +21,7 @@
     </module>
 
     <!-- Checks that a package-info.java file exists for each package. -->
-    <!-- todo: enable <module name="JavadocPackage"/> -->
+    <module name="JavadocPackage"/>
 
     <!-- Checks whether files end with a new line. -->
     <module name="NewlineAtEndOfFile"/>
