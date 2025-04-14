@@ -3,7 +3,7 @@ package marksman.client.components;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
-import marksman.client.MessageDispatcher;
+import marksman.shared.network.MessageDispatcher;
 import marksman.shared.network.Message;
 
 import java.io.OutputStream;

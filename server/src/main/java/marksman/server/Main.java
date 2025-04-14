@@ -1,8 +1,29 @@
 package marksman.server;
 
+import marksman.server.domain.Lobby;
+import marksman.server.domain.User;
+import marksman.shared.network.Message;
+import marksman.shared.network.MessageDispatcher;
+
+import java.io.IOException;
+
 public final class Main {
     public static void main(final String[] args) {
-        Application application = new Application(12345);
+        MessageDispatcher dispatcher = new MessageDispatcher();
+
+        Lobby lobby = new Lobby();
+        dispatcher.addHandler("lobby.join", (message, stream) -> {
+            try {
+                lobby.add(new User(message.value("player.name"), stream));
+                new Message()
+                        .with("action", "lobby.joined")
+                        .writeTo(stream);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        Application application = new Application(12345, dispatcher);
         application.start();
     }
 }

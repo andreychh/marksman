@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import marksman.client.components.LobbyComponent;
 import marksman.client.components.LoginComponent;
 import marksman.client.components.RootComponent;
+import marksman.shared.network.MessageDispatcher;
 import marksman.shared.network.Session;
 
 import java.io.IOException;

@@ -1,7 +1,4 @@
-package marksman.client;
-
-import marksman.shared.network.Message;
-import marksman.shared.network.MessageHandler;
+package marksman.shared.network;
 
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -28,11 +25,11 @@ public final class MessageDispatcher implements MessageHandler {
     }
 
     @Override
-    public void handle(final Message message, final OutputStream outputStream) {
+    public void handle(final Message message, final OutputStream stream) {
         String action = message.value("action");
         if (!handlers.containsKey(action)) {
             return;
         }
-        handlers.get(action).forEach(h -> h.handle(message, outputStream));
+        handlers.get(action).forEach(h -> h.handle(message, stream));
     }
 }

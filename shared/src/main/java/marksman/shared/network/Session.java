@@ -19,7 +19,7 @@ public final class Session implements AutoCloseable {
         new Thread(this::loop).start();
     }
 
-    // todo: pool breaks SRP
+    // todo: loop breaks SRP
     private void loop() {
         try (var in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()))) {
             while (true) {

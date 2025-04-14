@@ -3,7 +3,7 @@ package marksman.client.components;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
-import marksman.client.MessageDispatcher;
+import marksman.shared.network.MessageDispatcher;
 import marksman.shared.network.Message;
 
 import java.io.IOException;

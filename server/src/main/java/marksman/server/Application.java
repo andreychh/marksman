@@ -1,40 +1,27 @@
 package marksman.server;
 
-import marksman.server.domain.Lobby;
-import marksman.server.domain.User;
-import marksman.shared.network.Message;
+import marksman.shared.network.MessageDispatcher;
 import marksman.shared.network.Session;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 
 public final class Application {
     private final int port;
-    private final Lobby lobby;
+    private final MessageDispatcher dispatcher;
 
-    public Application(final int port) {
+    public Application(final int port, final MessageDispatcher dispatcher) {
         this.port = port;
-        this.lobby = new Lobby();
+        this.dispatcher = dispatcher;
     }
 
     public void start() {
         try (ServerSocket serverSocket = new ServerSocket(this.port)) {
             while (true) {
-                new Session(serverSocket.accept(), this::mux).start();
+                new Session(serverSocket.accept(), this.dispatcher).start();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    private void mux(final Message message, final OutputStream outputStream) {
-        switch (message.value("action")) {
-            case "lobby.join":
-                this.lobby.add(new User(message.value("player.name"), outputStream));
-                break;
-            default:
-                throw new RuntimeException(String.format("Unknown action: %s", message.value("action")));
         }
     }
 }
