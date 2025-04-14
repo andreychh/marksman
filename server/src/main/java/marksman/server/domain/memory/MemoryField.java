@@ -1,7 +1,7 @@
 package marksman.server.domain.memory;
 
 import marksman.server.domain.Geometry;
-import marksman.shared.geometry.Point;
+import marksman.shared.geometry.Size;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Polygon;
@@ -19,14 +19,14 @@ public final class MemoryField implements Geometry {
     public Polygon polygon() {
         Coordinate[] coordinates = new Coordinate[5];
         coordinates[0] = new Coordinate(0, 0);
-        coordinates[1] = new Coordinate(this.size().x(), 0);
-        coordinates[2] = new Coordinate(this.size().x(), this.size().y());
-        coordinates[3] = new Coordinate(0, this.size().y());
+        coordinates[1] = new Coordinate(this.size().width(), 0);
+        coordinates[2] = new Coordinate(this.size().width(), this.size().height());
+        coordinates[3] = new Coordinate(0, this.size().height());
         coordinates[4] = coordinates[0];
         return new GeometryFactory().createPolygon(coordinates);
     }
 
-    public Point size() {
+    public Size size() {
         return this.dataSource.fieldData().get(this.id).size;
     }
 }

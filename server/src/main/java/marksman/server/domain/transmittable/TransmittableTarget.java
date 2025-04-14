@@ -7,11 +7,11 @@ import java.io.OutputStream;
 
 public final class TransmittableTarget implements Target {
     private final Target origin;
-    private final OutputStream outputStream;
+    private final OutputStream stream;
 
-    public TransmittableTarget(final Target origin, final OutputStream outputStream) {
+    public TransmittableTarget(final Target origin, final OutputStream stream) {
         this.origin = origin;
-        this.outputStream = outputStream;
+        this.stream = stream;
     }
 
     @Override
@@ -31,6 +31,6 @@ public final class TransmittableTarget implements Target {
     }
 
     private void update() {
-        throw new RuntimeException("Not implemented yet");
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 }

@@ -1,6 +1,7 @@
 package marksman.server.domain.memory;
 
 import marksman.shared.geometry.Point;
+import marksman.shared.geometry.Size;
 
 /**
  * MemoryFields is typically redundant as only a single game field is usually
@@ -14,7 +15,7 @@ public final class MemoryFields {
         this.dataSource = dataSource;
     }
 
-    public MemoryField add(final Point center, final Point size) {
+    public MemoryField add(final Point center, final Size size) {
         int id = this.dataSource.addField(center, size);
         return new MemoryField(id, dataSource);
     }

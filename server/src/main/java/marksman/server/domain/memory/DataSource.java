@@ -1,6 +1,7 @@
 package marksman.server.domain.memory;
 
 import marksman.shared.geometry.Point;
+import marksman.shared.geometry.Size;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,9 +23,9 @@ class TargetData {
 class FieldData {
     int id;
     Point center;
-    Point size;
+    Size size;
 
-    FieldData(final int id, final Point center, final Point size) {
+    FieldData(final int id, final Point center, final Size size) {
         this.id = id;
         this.center = center;
         this.size = size;
@@ -56,7 +57,7 @@ public final class DataSource {
         return this.fieldData;
     }
 
-    int addField(final Point center, final Point size) {
+    int addField(final Point center, final Size size) {
         this.id += 1;
         this.fieldData.put(id, new FieldData(id, center, size));
         return id;
