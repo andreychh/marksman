@@ -7,8 +7,8 @@ import javafx.stage.Stage;
 import marksman.client.components.LobbyComponent;
 import marksman.client.components.LoginComponent;
 import marksman.client.components.RootComponent;
+import marksman.shared.network.Connection;
 import marksman.shared.network.MessageDispatcher;
-import marksman.shared.network.Session;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -21,17 +21,17 @@ public final class FXApplication extends Application {
 
     @Override
     public void start(final Stage primaryStage) throws IOException {
-        MessageDispatcher messageDispatcher = new MessageDispatcher();
-        Session session = new Session(new Socket("localhost", 12345), messageDispatcher);
-        session.start();
+        MessageDispatcher dispatcher = new MessageDispatcher();
+        Connection connection = new Connection(new Socket("localhost", 12345), dispatcher);
+        connection.start();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/marksman/client/root.fxml"));
         loader.setControllerFactory(cls -> {
             try {
                 return switch (cls.getSimpleName()) {
-                    case "RootComponent" -> new RootComponent(session.outputStream(), messageDispatcher);
-                    case "LoginComponent" -> new LoginComponent(session.outputStream(), messageDispatcher);
-                    case "LobbyComponent" -> new LobbyComponent(session.outputStream(), messageDispatcher);
+                    case "RootComponent" -> new RootComponent(connection.outputStream(), dispatcher);
+                    case "LoginComponent" -> new LoginComponent(connection.outputStream(), dispatcher);
+                    case "LobbyComponent" -> new LobbyComponent(connection.outputStream(), dispatcher);
                     default -> throw new RuntimeException("Unknown class: " + cls);
                 };
             } catch (IOException e) {
@@ -41,7 +41,7 @@ public final class FXApplication extends Application {
 
         primaryStage.setOnCloseRequest(event -> {
             try {
-                session.close();
+                connection.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

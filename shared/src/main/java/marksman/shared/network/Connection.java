@@ -6,11 +6,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
 
-public final class Session implements AutoCloseable {
+public final class Connection implements AutoCloseable {
     private final Socket socket;
     private final MessageHandler handler;
 
-    public Session(final Socket socket, final MessageHandler handler) {
+    public Connection(final Socket socket, final MessageHandler handler) {
         this.socket = socket;
         this.handler = handler;
     }
@@ -19,7 +19,6 @@ public final class Session implements AutoCloseable {
         new Thread(this::loop).start();
     }
 
-    // todo: loop breaks SRP
     private void loop() {
         try (var in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()))) {
             while (true) {
@@ -27,17 +26,7 @@ public final class Session implements AutoCloseable {
                 if (line == null) {
                     break;
                 }
-                Message request = new Message();
-                String[] pairs = line.split(";");
-                for (String pair : pairs) {
-                    String[] keyValue = pair.split("=");
-                    if (keyValue.length == 2) {
-                        request.with(keyValue[0], keyValue[1]);
-                    } else {
-                        throw new IllegalArgumentException("Invalid message format");
-                    }
-                }
-                handler.handle(request, this.outputStream());
+                handler.handleMessage(new InputAsMessage(line).message(), this.outputStream());
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -25,11 +25,11 @@ public final class MessageDispatcher implements MessageHandler {
     }
 
     @Override
-    public void handle(final Message message, final OutputStream stream) {
+    public void handleMessage(final Message message, final OutputStream stream) {
         String action = message.value("action");
         if (!handlers.containsKey(action)) {
             return;
         }
-        handlers.get(action).forEach(h -> h.handle(message, stream));
+        handlers.get(action).forEach(h -> h.handleMessage(message, stream));
     }
 }

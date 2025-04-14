@@ -1,11 +1,12 @@
 package marksman.server;
 
+import marksman.shared.network.Connection;
 import marksman.shared.network.MessageDispatcher;
-import marksman.shared.network.Session;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 
+// todo: rename
 public final class Application {
     private final int port;
     private final MessageDispatcher dispatcher;
@@ -18,7 +19,7 @@ public final class Application {
     public void start() {
         try (ServerSocket serverSocket = new ServerSocket(this.port)) {
             while (true) {
-                new Session(serverSocket.accept(), this.dispatcher).start();
+                new Connection(serverSocket.accept(), this.dispatcher).start();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

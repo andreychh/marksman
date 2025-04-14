@@ -3,30 +3,30 @@ package marksman.client.components;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
+import marksman.shared.network.MapMessage;
 import marksman.shared.network.MessageDispatcher;
-import marksman.shared.network.Message;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
 public final class LobbyComponent {
-    private final OutputStream outputStream;
-    private final MessageDispatcher messageDispatcher;
+    private final OutputStream stream;
+    private final MessageDispatcher dispatcher;
 
     @FXML
     private VBox players;
 
-    public LobbyComponent(final OutputStream outputStream, final MessageDispatcher messageDispatcher) {
-        this.outputStream = outputStream;
-        this.messageDispatcher = messageDispatcher;
+    public LobbyComponent(final OutputStream stream, final MessageDispatcher dispatcher) {
+        this.stream = stream;
+        this.dispatcher = dispatcher;
     }
 
     @FXML
     private void onReadyButtonAction(final ActionEvent actionEvent) {
         try {
-            new Message()
+            new MapMessage()
                     .with("action", "game.ready") // todo: rename action
-                    .writeTo(this.outputStream);
+                    .writeTo(this.stream);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -35,9 +35,9 @@ public final class LobbyComponent {
     @FXML
     private void onExitLobbyButtonAction(final ActionEvent actionEvent) {
         try {
-            new Message()
+            new MapMessage()
                     .with("action", "lobby.exit")
-                    .writeTo(this.outputStream);
+                    .writeTo(this.stream);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
