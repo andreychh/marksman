@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import marksman.client.components.LobbyComponent;
 import marksman.client.components.LoginComponent;
 import marksman.client.components.RootComponent;
+import marksman.client.domain.LoginPlayer;
 import marksman.shared.network.Connection;
 import marksman.shared.network.MessageDispatcher;
 
@@ -30,7 +31,7 @@ public final class FXApplication extends Application {
             try {
                 return switch (cls.getSimpleName()) {
                     case "RootComponent" -> new RootComponent(connection.outputStream(), dispatcher);
-                    case "LoginComponent" -> new LoginComponent(connection.outputStream(), dispatcher);
+                    case "LoginComponent" -> new LoginComponent(new LoginPlayer(connection.outputStream()));
                     case "LobbyComponent" -> new LobbyComponent(connection.outputStream(), dispatcher);
                     default -> throw new RuntimeException("Unknown class: " + cls);
                 };

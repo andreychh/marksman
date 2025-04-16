@@ -2,37 +2,35 @@ package marksman.client.components;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
-import marksman.shared.network.MapMessage;
-import marksman.shared.network.MessageDispatcher;
+import marksman.client.domain.LoginPlayer;
 
 import java.io.IOException;
-import java.io.OutputStream;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public final class LoginComponent {
-    private final OutputStream stream;
-    private final MessageDispatcher dispatcher;
-
+public final class LoginComponent implements Initializable {
     @FXML
     private TextField nameTextField;
-    @FXML
-    private Label errorLabel;
 
-    public LoginComponent(final OutputStream stream, final MessageDispatcher dispatcher) {
-        this.stream = stream;
-        this.dispatcher = dispatcher;
+    private final LoginPlayer player;
+
+    public LoginComponent(final LoginPlayer player) {
+        this.player = player;
     }
 
     @FXML
     private void onJoinLobbyButtonAction(final ActionEvent event) {
         try {
-            new MapMessage()
-                    .with("action", "lobby.join")
-                    .with("player.name", this.nameTextField.getText())
-                    .writeTo(this.stream);
+            this.player.joinLobby();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e); // todo: show error message
         }
+    }
+
+    @Override
+    public void initialize(final URL url, final ResourceBundle resourceBundle) {
+        this.nameTextField.textProperty().bindBidirectional(this.player.nameProperty());
     }
 }
