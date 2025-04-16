@@ -2,6 +2,7 @@ package marksman.shared.network;
 
 import java.util.InputMismatchException;
 
+// todo: rename
 public final class InputAsMessage {
     private final String input;
 
@@ -10,7 +11,7 @@ public final class InputAsMessage {
     }
 
     public Message message() {
-        MapMessage message = new MapMessage();
+        Message message = new Message();
         String[] pairs = this.input.split(";");
         for (String pair : pairs) {
             String[] keyValue = pair.split("=");

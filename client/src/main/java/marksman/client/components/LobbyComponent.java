@@ -3,7 +3,7 @@ package marksman.client.components;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
-import marksman.shared.network.MapMessage;
+import marksman.shared.network.Message;
 import marksman.shared.network.MessageDispatcher;
 
 import java.io.IOException;
@@ -24,7 +24,7 @@ public final class LobbyComponent {
     @FXML
     private void onReadyButtonAction(final ActionEvent actionEvent) {
         try {
-            new MapMessage()
+            new Message()
                     .with("action", "game.ready") // todo: rename action
                     .writeTo(this.stream);
         } catch (IOException e) {
@@ -35,7 +35,7 @@ public final class LobbyComponent {
     @FXML
     private void onExitLobbyButtonAction(final ActionEvent actionEvent) {
         try {
-            new MapMessage()
+            new Message()
                     .with("action", "lobby.exit")
                     .writeTo(this.stream);
         } catch (IOException e) {

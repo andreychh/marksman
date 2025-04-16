@@ -2,7 +2,7 @@ package marksman.client.domain;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
-import marksman.shared.network.MapMessage;
+import marksman.shared.network.Message;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -21,7 +21,7 @@ public final class LoginPlayer {
     }
 
     public void joinLobby() throws IOException {
-        new MapMessage()
+        new Message()
                 .with("action", "lobby.join")
                 .with("player.name", this.nameProperty.get())
                 .writeTo(this.stream);

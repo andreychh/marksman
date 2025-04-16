@@ -2,7 +2,7 @@ package marksman.server;
 
 import marksman.server.domain.Lobby;
 import marksman.server.domain.User;
-import marksman.shared.network.MapMessage;
+import marksman.shared.network.Message;
 import marksman.shared.network.MessageDispatcher;
 
 import java.io.IOException;
@@ -15,7 +15,7 @@ public final class Main {
         dispatcher.addHandler("lobby.join", (message, stream) -> {
             try {
                 lobby.add(new User(message.value("player.name"), stream));
-                new MapMessage()
+                new Message()
                         .with("action", "lobby.joined")
                         .writeTo(stream);
             } catch (IOException e) {
