@@ -1,4 +1,4 @@
-package marksman.client.components;
+package marksman.client;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+// todo: redesign
 public final class RootComponent implements Initializable {
     private final OutputStream stream;
     private final MessageDispatcher dispatcher;

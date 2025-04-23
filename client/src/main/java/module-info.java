@@ -4,7 +4,10 @@ module marksman.client {
     requires marksman.shared;
 
     opens marksman.client to javafx.fxml;
-    opens marksman.client.components to javafx.fxml;
 
     exports marksman.client;
+    opens marksman.client.lobby to javafx.fxml;
+    opens marksman.client.login to javafx.fxml;
+    opens marksman.client.lobby.players to javafx.fxml;
+    opens marksman.client.lobby.player to javafx.fxml;
 }

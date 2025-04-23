@@ -2,14 +2,14 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="384.0" prefWidth="530.0"
             xmlns="http://javafx.com/javafx/23.0.1"
-            fx:controller="marksman.client.components.LobbyComponent">
+            fx:controller="marksman.client.lobby.Component">
     <center>
-        <VBox fx:id="players" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0"
-              BorderPane.alignment="CENTER"/>
+        <fx:include source="players.fxml"/>
     </center>
     <top>
         <Label text="Lobby" BorderPane.alignment="CENTER"/>
@@ -17,8 +17,9 @@
     <bottom>
         <HBox alignment="CENTER_LEFT" prefHeight="41.0" prefWidth="530.0" spacing="10.0" BorderPane.alignment="CENTER">
             <children>
-                <Button mnemonicParsing="false" onAction="#onReadyButtonAction" text="Ready"/>
-                <Button mnemonicParsing="false" onAction="#onExitLobbyButtonAction" text="Exit"/>
+                <Button fx:id="toggleReadinessButton" mnemonicParsing="false"
+                        onAction="#onToggleReadinessButtonAction"/>
+                <Button mnemonicParsing="false" onAction="#onLeaveLobbyButtonAction"/>
             </children>
         </HBox>
     </bottom>
