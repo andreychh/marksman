@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+           xmlns="http://javafx.com/javafx/17.0.12" fx:controller="marksman.client.app.FXApp">
+    <children>
+        <fx:include fx:id="loginComponent" source="../login/user.fxml"/>
+        <fx:include fx:id="lobbyComponent" source="../lobby/user.fxml"/>
+    </children>
+</StackPane>
