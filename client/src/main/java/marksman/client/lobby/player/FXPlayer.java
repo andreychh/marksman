@@ -4,11 +4,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import marksman.client.FXController;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public final class Component implements Initializable {
+public final class FXPlayer implements FXController, Initializable {
     private final Player player;
 
     @FXML
@@ -16,7 +17,7 @@ public final class Component implements Initializable {
     @FXML
     private Label nameLabel;
 
-    public Component(final Player player) {
+    public FXPlayer(final Player player) {
         this.player = player;
     }
 

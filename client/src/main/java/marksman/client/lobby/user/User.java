@@ -1,4 +1,4 @@
-package marksman.client.lobby;
+package marksman.client.lobby.user;
 
 import javafx.beans.property.Property;
 import marksman.shared.network.Message;

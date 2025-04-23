@@ -7,7 +7,7 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="384.0" prefWidth="530.0"
             xmlns="http://javafx.com/javafx/23.0.1"
-            fx:controller="marksman.client.lobby.Component">
+            fx:controller="marksman.client.lobby.user.FXUser" visible="false">
     <center>
         <fx:include source="players.fxml"/>
     </center>
@@ -19,7 +19,7 @@
             <children>
                 <Button fx:id="toggleReadinessButton" mnemonicParsing="false"
                         onAction="#onToggleReadinessButtonAction"/>
-                <Button mnemonicParsing="false" onAction="#onLeaveLobbyButtonAction"/>
+                <Button mnemonicParsing="false" onAction="#onLeaveLobbyButtonAction" text="Leave"/>
             </children>
         </HBox>
     </bottom>

@@ -9,10 +9,12 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import marksman.client.lobby.User;
+import marksman.client.app.FXApp;
 import marksman.client.lobby.player.Player;
+import marksman.client.lobby.players.FXPlayers;
 import marksman.client.lobby.players.Players;
-import marksman.client.login.Component;
+import marksman.client.lobby.user.FXUser;
+import marksman.client.lobby.user.User;
 import marksman.shared.network.Connection;
 import marksman.shared.network.MessageDispatcher;
 
@@ -32,29 +34,29 @@ public final class FXApplication extends Application {
         Connection connection = new Connection(new Socket("localhost", 12345), dispatcher);
         connection.start();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/marksman/client/root.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/marksman/client/app/app.fxml"));
         loader.setControllerFactory(cls -> {
             Property<String> userNameProperty = new SimpleStringProperty();
             try {
                 return switch (cls.getName()) {
-                    case "marksman.client.RootComponent" -> new RootComponent(
+                    case "marksman.client.app.FXApp" -> new FXApp(
                             connection.outputStream(),
                             dispatcher
                     );
-                    case "marksman.client.login.Component" -> new Component(
-                            new marksman.client.login.User(
+                    case "marksman.client.login.user.FXUser" -> new marksman.client.login.user.FXUser(
+                            new marksman.client.login.user.User(
                                     connection.outputStream(),
                                     userNameProperty
                             )
                     );
-                    case "marksman.client.lobby.Component" -> new marksman.client.lobby.Component(
+                    case "marksman.client.lobby.user.FXUser" -> new FXUser(
                             new User(
                                     connection.outputStream(),
                                     userNameProperty,
                                     new SimpleBooleanProperty(false)
                             )
                     );
-                    case "marksman.client.lobby.players.Component" -> new marksman.client.lobby.players.Component(
+                    case "marksman.client.lobby.players.FXPlayers" -> new FXPlayers(
                             this.getPlayers(dispatcher)
                     );
                     default -> throw new RuntimeException("Unknown class: " + cls.getName());

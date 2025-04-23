@@ -1,4 +1,4 @@
-package marksman.client.login;
+package marksman.client.login.user;
 
 import javafx.beans.property.Property;
 import marksman.shared.network.Message;
@@ -16,7 +16,6 @@ public final class User {
     }
 
     public void rename(final String name) {
-        // todo: implement validation as decorator
         if (name.isBlank()) {
             throw new IllegalArgumentException("Name cannot be blank");
         }

@@ -1,4 +1,4 @@
-package marksman.client.lobby;
+package marksman.client.lobby.user;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
@@ -6,17 +6,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import marksman.client.FXController;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public final class Component implements Initializable {
+public final class FXUser implements FXController, Initializable {
     private final User user;
     @FXML
     private Button toggleReadinessButton;
 
-    public Component(final User user) {
+    public FXUser(final User user) {
         this.user = user;
     }
 

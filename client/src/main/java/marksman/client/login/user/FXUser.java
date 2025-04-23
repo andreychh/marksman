@@ -1,18 +1,19 @@
-package marksman.client.login;
+package marksman.client.login.user;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import marksman.client.FXController;
 
 import java.io.IOException;
 
-public final class Component {
+public final class FXUser implements FXController {
+    private final User user;
+
     @FXML
     private TextField nameTextField;
 
-    private final User user;
-
-    public Component(final User user) {
+    public FXUser(final User user) {
         this.user = user;
     }
 

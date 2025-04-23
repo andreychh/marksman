@@ -4,20 +4,22 @@ import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
+import marksman.client.FXController;
 import marksman.client.FXMLComponent;
+import marksman.client.lobby.player.FXPlayer;
 import marksman.client.lobby.player.Player;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public final class Component implements Initializable {
+public final class FXPlayers implements FXController, Initializable {
     private final Players players;
 
     @FXML
     private VBox playersVBox;
 
-    public Component(final Players players) {
+    public FXPlayers(final Players players) {
         this.players = players;
     }
 
@@ -31,8 +33,8 @@ public final class Component implements Initializable {
                         for (Player player : change.getAddedSubList()) {
                             playersVBox.getChildren().add(
                                     new FXMLComponent(
-                                            getClass().getResource("/marksman/client/player.fxml"),
-                                            new marksman.client.lobby.player.Component(player)
+                                            getClass().getResource("/marksman/client/lobby/player.fxml"),
+                                            new FXPlayer(player)
                                     ).parent()
                             );
                         }

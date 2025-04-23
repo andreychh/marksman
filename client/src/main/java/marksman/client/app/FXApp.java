@@ -1,8 +1,9 @@
-package marksman.client;
+package marksman.client.app;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
+import marksman.client.FXController;
 import marksman.shared.network.Message;
 import marksman.shared.network.MessageDispatcher;
 
@@ -11,7 +12,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 // todo: redesign
-public final class RootComponent implements Initializable {
+public final class FXApp implements FXController, Initializable {
     private final OutputStream stream;
     private final MessageDispatcher dispatcher;
 
@@ -20,7 +21,7 @@ public final class RootComponent implements Initializable {
     @FXML
     private BorderPane lobbyComponent;
 
-    public RootComponent(final OutputStream stream, final MessageDispatcher dispatcher) {
+    public FXApp(final OutputStream stream, final MessageDispatcher dispatcher) {
         this.stream = stream;
         this.dispatcher = dispatcher;
     }
