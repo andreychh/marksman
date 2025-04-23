@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="384.0" prefWidth="530.0"
+<BorderPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" prefHeight="384.0" prefWidth="530.0"
             xmlns="http://javafx.com/javafx/23.0.1" fx:controller="marksman.client.lobby.user.FXUser" visible="false">
     <center>
         <fx:include source="players.fxml"/>
