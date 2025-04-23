@@ -18,7 +18,7 @@ public final class Players {
         this.players.remove(player);
     }
 
-    public ObservableList<Player> property() {
+    public ObservableList<Player> listProperty() {
         return players;
     }
 }

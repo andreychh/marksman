@@ -1,21 +1,22 @@
 package marksman.client.lobby.player;
 
-import javafx.beans.property.Property;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.StringProperty;
 
 public final class Player {
-    private final Property<String> nameProperty;
-    private final Property<Boolean> readinessProperty;
+    private final StringProperty nameProperty;
+    private final BooleanProperty readinessProperty;
 
-    public Player(final Property<String> nameProperty, final Property<Boolean> readinessProperty) {
+    public Player(final StringProperty nameProperty, final BooleanProperty readinessProperty) {
         this.nameProperty = nameProperty;
         this.readinessProperty = readinessProperty;
     }
 
-    public Property<String> nameProperty() {
+    public StringProperty nameProperty() {
         return nameProperty;
     }
 
-    public Property<Boolean> readinessProperty() {
+    public BooleanProperty readinessProperty() {
         return readinessProperty;
     }
 }

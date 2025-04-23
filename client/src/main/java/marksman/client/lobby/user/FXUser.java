@@ -1,7 +1,6 @@
 package marksman.client.lobby.user;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.BooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +13,7 @@ import java.util.ResourceBundle;
 
 public final class FXUser implements FXController, Initializable {
     private final User user;
+
     @FXML
     private Button toggleReadinessButton;
 
@@ -24,7 +24,7 @@ public final class FXUser implements FXController, Initializable {
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
         toggleReadinessButton.textProperty().bind(
-                Bindings.when((BooleanProperty) user.readinessProperty())
+                Bindings.when(this.user.readinessProperty())
                         .then("Unready")
                         .otherwise("Ready")
         );

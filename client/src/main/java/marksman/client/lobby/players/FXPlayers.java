@@ -26,7 +26,7 @@ public final class FXPlayers implements FXController, Initializable {
     // todo: refactor
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
-        players.property().addListener((ListChangeListener<Player>) change -> {
+        players.listProperty().addListener((ListChangeListener<Player>) change -> {
             while (change.next()) {
                 try {
                     if (change.wasAdded()) {
@@ -45,7 +45,7 @@ public final class FXPlayers implements FXController, Initializable {
 
                 if (change.wasRemoved()) {
                     for (Player removedPlayer : change.getRemoved()) {
-                        System.out.println("Removed player: " + removedPlayer.nameProperty().getValue());
+                        System.out.println("Removed player: " + removedPlayer.nameProperty().get());
                     }
                 }
             }
