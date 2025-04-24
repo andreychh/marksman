@@ -5,22 +5,15 @@ import marksman.server.domain.User;
 import marksman.shared.network.Message;
 import marksman.shared.network.MessageDispatcher;
 
-import java.io.IOException;
-
 public final class Main {
     public static void main(final String[] args) {
         MessageDispatcher dispatcher = new MessageDispatcher();
 
         Lobby lobby = new Lobby();
-        dispatcher.addHandler("lobby.join", (message, stream) -> {
-            try {
-                lobby.add(new User(message.value("player.name"), stream));
-                new Message()
-                        .with("action", "lobby.joined")
-                        .writeTo(stream);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        dispatcher.addHandler("user.joinLobby", (message, stream) -> {
+            User user = new User(message.value("user.name"), stream);
+            lobby.add(user);
+            user.send(new Message().with("action", "lobby.joined"));
         });
 
         Application application = new Application(12345, dispatcher);

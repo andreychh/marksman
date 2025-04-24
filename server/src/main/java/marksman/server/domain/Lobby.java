@@ -1,12 +1,11 @@
 package marksman.server.domain;
 
-import marksman.server.MultiOutputStream;
+import marksman.shared.network.Message;
 
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Lobby {
+public final class Lobby implements Sender {
     private final List<User> users;
 
     public Lobby() {
@@ -17,9 +16,8 @@ public final class Lobby {
         this.users.add(user);
     }
 
-    public OutputStream outputStream() {
-        return new MultiOutputStream(this.users.stream()
-                .map(User::outputStream)
-                .toArray(OutputStream[]::new));
+    @Override
+    public void send(final Message message) {
+        this.users.forEach(u -> u.send(message));
     }
 }
