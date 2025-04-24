@@ -1,17 +1,16 @@
 package marksman.server.domain.transmittable;
 
+import marksman.server.domain.Sender;
 import marksman.server.domain.Target;
 import org.locationtech.jts.geom.Polygon;
 
-import java.io.OutputStream;
-
 public final class TransmittableTarget implements Target {
     private final Target origin;
-    private final OutputStream stream;
+    private final Sender sender;
 
-    public TransmittableTarget(final Target origin, final OutputStream stream) {
+    public TransmittableTarget(final Target origin, final Sender sender) {
         this.origin = origin;
-        this.stream = stream;
+        this.sender = sender;
     }
 
     @Override
