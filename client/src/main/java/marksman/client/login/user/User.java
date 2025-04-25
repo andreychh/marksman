@@ -28,4 +28,8 @@ public final class User {
                 .with("user.name", this.nameProperty.get())
                 .writeTo(this.stream);
     }
+
+    public StringProperty nameProperty() {
+        return nameProperty;
+    }
 }

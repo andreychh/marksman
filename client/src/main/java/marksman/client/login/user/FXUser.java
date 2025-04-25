@@ -2,12 +2,15 @@ package marksman.client.login.user;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import marksman.client.FXController;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public final class FXUser implements FXController {
+public final class FXUser implements FXController, Initializable {
     private final User user;
 
     @FXML
@@ -27,5 +30,10 @@ public final class FXUser implements FXController {
         } catch (IOException e) {
             throw new RuntimeException(e); // todo: show error message
         }
+    }
+
+    @Override
+    public void initialize(final URL url, final ResourceBundle resourceBundle) {
+        this.nameTextField.textProperty().bind(this.user.nameProperty());
     }
 }
