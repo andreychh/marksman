@@ -3,6 +3,7 @@ package marksman.client.login.user;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import marksman.client.FXController;
 
@@ -13,6 +14,8 @@ import java.util.ResourceBundle;
 public final class FXUser implements FXController, Initializable {
     private final User user;
 
+    @FXML
+    private Button loginButton;
     @FXML
     private TextField nameTextField;
 
@@ -34,6 +37,10 @@ public final class FXUser implements FXController, Initializable {
 
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
-        this.nameTextField.textProperty().bind(this.user.nameProperty());
+        this.nameTextField.setText(this.user.nameProperty().get());
+        this.loginButton.disableProperty().bind(
+                this.nameTextField.textProperty().isEmpty()
+        );
+        this.nameTextField.requestFocus();
     }
 }

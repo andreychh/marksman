@@ -13,7 +13,7 @@
             <children>
                 <Label text="name:"/>
                 <TextField fx:id="nameTextField" prefHeight="25.0" prefWidth="120.0"/>
-                <Button mnemonicParsing="false" onAction="#onJoinLobbyButtonAction" text="Join"/>
+                <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onJoinLobbyButtonAction" text="Join"/>
             </children>
         </HBox>
     </center>
