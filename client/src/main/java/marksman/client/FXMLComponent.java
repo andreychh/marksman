@@ -2,23 +2,32 @@ package marksman.client;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
 
 public final class FXMLComponent {
     private final URL location;
-    private final FXController controller;
+    private final Callback<Class<?>, FXController> controllerFactory;
 
-    public FXMLComponent(final URL location, final FXController controller) {
+    public FXMLComponent(final URL location, final Callback<Class<?>, FXController> controllerFactory) {
         this.location = location;
-        this.controller = controller;
+        this.controllerFactory = controllerFactory;
     }
 
-    public Parent parent() throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(this.location);
-        loader.setControllerFactory(_ -> this.controller);
-        return loader.load();
+    public FXMLComponent(final URL location, final FXController controller) {
+        this(location, _ -> controller);
+    }
+
+    public Parent parent() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(this.location);
+            loader.setControllerFactory(this.controllerFactory::call);
+            return loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

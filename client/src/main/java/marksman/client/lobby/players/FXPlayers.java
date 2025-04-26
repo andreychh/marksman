@@ -3,13 +3,13 @@ package marksman.client.lobby.players;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import marksman.client.FXController;
 import marksman.client.FXMLComponent;
 import marksman.client.lobby.player.FXPlayer;
 import marksman.client.lobby.player.Player;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -23,32 +23,40 @@ public final class FXPlayers implements FXController, Initializable {
         this.players = players;
     }
 
-    // todo: refactor
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
+        players.listProperty().forEach(p -> {
+            playersVBox.getChildren().add(this.playerNode(p));
+        });
+
         players.listProperty().addListener((ListChangeListener<Player>) change -> {
             while (change.next()) {
-                try {
-                    if (change.wasAdded()) {
-                        for (Player player : change.getAddedSubList()) {
-                            playersVBox.getChildren().add(
-                                    new FXMLComponent(
-                                            getClass().getResource("/marksman/client/lobby/player.fxml"),
-                                            new FXPlayer(player)
-                                    ).parent()
-                            );
-                        }
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e); // todo: show error message
+                if (change.wasAdded()) {
+                    change.getAddedSubList().forEach(p -> {
+                        playersVBox.getChildren().add(this.playerNode(p));
+                    });
                 }
 
                 if (change.wasRemoved()) {
-                    for (Player removedPlayer : change.getRemoved()) {
-                        System.out.println("Removed player: " + removedPlayer.nameProperty().get());
-                    }
+                    change.getRemoved().forEach(p -> {
+                        for (Node n : playersVBox.getChildren()) {
+                            if (n.getUserData() == p.nameProperty().get()) {
+                                playersVBox.getChildren().remove(n);
+                                break;
+                            }
+                        }
+                    });
                 }
             }
         });
+    }
+
+    private Node playerNode(final Player player) {
+        Node node = new FXMLComponent(
+                getClass().getResource("/marksman/client/lobby/player.fxml"),
+                new FXPlayer(player)
+        ).parent();
+        node.setUserData(player.nameProperty().get());
+        return node;
     }
 }
