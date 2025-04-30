@@ -1,5 +1,6 @@
 package marksman.client.lobby.players;
 
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,28 +24,35 @@ public final class FXPlayers implements FXController, Initializable {
         this.players = players;
     }
 
+    // todo: refactor
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
-        players.listProperty().forEach(p -> {
-            playersVBox.getChildren().add(this.playerNode(p));
+        Platform.runLater(() -> {
+            players.listProperty().forEach(p -> {
+                playersVBox.getChildren().add(this.playerNode(p));
+            });
         });
 
         players.listProperty().addListener((ListChangeListener<Player>) change -> {
             while (change.next()) {
                 if (change.wasAdded()) {
-                    change.getAddedSubList().forEach(p -> {
-                        playersVBox.getChildren().add(this.playerNode(p));
+                    Platform.runLater(() -> {
+                        change.getAddedSubList().forEach(p -> {
+                            playersVBox.getChildren().add(this.playerNode(p));
+                        });
                     });
                 }
 
                 if (change.wasRemoved()) {
-                    change.getRemoved().forEach(p -> {
-                        for (Node n : playersVBox.getChildren()) {
-                            if (n.getUserData() == p.nameProperty().get()) {
-                                playersVBox.getChildren().remove(n);
-                                break;
+                    Platform.runLater(() -> {
+                        change.getRemoved().forEach(p -> {
+                            for (Node n : playersVBox.getChildren()) {
+                                if (n.getUserData() == p.nameProperty().get()) {
+                                    playersVBox.getChildren().remove(n);
+                                    break;
+                                }
                             }
-                        }
+                        });
                     });
                 }
             }

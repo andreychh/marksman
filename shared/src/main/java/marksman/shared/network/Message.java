@@ -37,7 +37,7 @@ public final class Message {
         stream.flush();
     }
 
-    private String content() {
+    public String content() {
         return this.args
                 .entrySet()
                 .stream()
