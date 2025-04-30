@@ -45,4 +45,8 @@ public final class User implements Sender {
     public boolean isReady() {
         return isReady;
     }
+    @Override
+    public String toString() {
+        return String.format("%s~%s", name, isReady);
+    }
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public final class Lobby implements Sender {
     private final Map<String, User> users;
@@ -59,5 +60,16 @@ public final class Lobby implements Sender {
 
     public User get(final String name) {
         return this.users.get(name);
+    }
+
+    @Override
+    public String toString() {
+        if (this.users.isEmpty()) {
+            return "null";
+        }
+        return this.users.values()
+                .stream()
+                .map(User::toString)
+                .collect(Collectors.joining("%"));
     }
 }

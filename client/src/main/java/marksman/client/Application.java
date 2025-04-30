@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import marksman.client.lobby.players.InputAsPlayers;
 import marksman.shared.network.Connection;
 import marksman.shared.network.LoggedMessageHandler;
 import marksman.shared.network.Message;
@@ -63,7 +64,11 @@ public final class Application extends javafx.application.Application {
                                     new SimpleStringProperty(message.value("user.name")),
                                     new SimpleBooleanProperty(Boolean.parseBoolean(message.value("user.readiness")))
                             ),
-                            new marksman.client.lobby.players.Players(FXCollections.observableArrayList())
+                            new marksman.client.lobby.players.Players(
+                                    FXCollections.observableArrayList(
+                                            new InputAsPlayers(message.value("lobby.users")).players()
+                                    )
+                            )
                     );
                 }
                 default -> {

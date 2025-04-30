@@ -25,23 +25,20 @@ public final class Main {
         Lobby lobby = new Lobby();
         dispatcher.addHandler("user.joinLobby", (message, stream) -> {
             User user = new User(message.value("user.name"), stream);
-            user.send(
-                    new Message()
-                            .with("action", "app.screenChanged")
-                            .with("screen.name", "lobby")
-                            .with("user.name", String.valueOf(stream.hashCode()))
-                            .with("user.readiness", String.valueOf(false))
-            );
+            user.send(new Message()
+                    .with("action", "app.screenChanged")
+                    .with("screen.name", "lobby")
+                    .with("user.name", String.valueOf(stream.hashCode()))
+                    .with("user.readiness", String.valueOf(false))
+                    .with("lobby.users", lobby.toString()));
             lobby.add(user);
         });
 
         dispatcher.addHandler("user.leaveLobby", (message, stream) -> {
-            lobby.get(message.value("user.name")).send(
-                    new Message()
-                            .with("action", "app.screenChanged")
-                            .with("screen.name", "login")
-                            .with("user.name", message.value("user.name"))
-            );
+            lobby.get(message.value("user.name")).send(new Message()
+                    .with("action", "app.screenChanged")
+                    .with("screen.name", "login")
+                    .with("user.name", message.value("user.name")));
             lobby.remove(message.value("user.name"));
         });
 
