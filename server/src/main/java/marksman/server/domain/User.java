@@ -4,14 +4,20 @@ import marksman.shared.network.Message;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class User implements Sender {
     private final String name;
-    private final OutputStream outputStream;
+    private final OutputStream stream;
+    private final List<Runnable> listeners;
+    private boolean isReady;
 
-    public User(final String name, final OutputStream outputStream) {
+    public User(final String name, final OutputStream stream) {
         this.name = name;
-        this.outputStream = outputStream;
+        this.stream = stream;
+        this.listeners = new ArrayList<>();
+        this.isReady = false;
     }
 
     public String name() {
@@ -21,9 +27,22 @@ public final class User implements Sender {
     @Override
     public void send(final Message message) {
         try {
-            message.writeTo(this.outputStream);
+            message.writeTo(this.stream);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void toggleReadiness() {
+        this.isReady = !this.isReady;
+        this.listeners.forEach(Runnable::run);
+    }
+
+    public List<Runnable> listeners() {
+        return this.listeners;
+    }
+
+    public boolean isReady() {
+        return isReady;
     }
 }
