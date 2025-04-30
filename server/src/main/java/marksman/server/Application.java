@@ -1,6 +1,7 @@
 package marksman.server;
 
 import marksman.shared.network.Connection;
+import marksman.shared.network.LoggedMessageHandler;
 import marksman.shared.network.MessageDispatcher;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ public final class Application {
     public void start() {
         try (ServerSocket serverSocket = new ServerSocket(this.port)) {
             while (true) {
-                new Connection(serverSocket.accept(), this.dispatcher).start();
+                new Connection(serverSocket.accept(), new LoggedMessageHandler(this.dispatcher)).start();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
