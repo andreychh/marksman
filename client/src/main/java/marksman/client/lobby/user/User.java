@@ -1,13 +1,15 @@
 package marksman.client.lobby.user;
 
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 import marksman.shared.network.Message;
+import marksman.shared.network.MessageHandler;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
-public final class User {
+public final class User implements MessageHandler {
     private final OutputStream stream;
     private final StringProperty nameProperty;
     private final BooleanProperty readinessProperty;
@@ -38,5 +40,21 @@ public final class User {
 
     public BooleanProperty readinessProperty() {
         return this.readinessProperty;
+    }
+
+    @Override
+    public void handleMessage(final Message message, final OutputStream stream) {
+        switch (message.value("action")) {
+            case "user.readinessChanged" -> {
+                if (!message.value("user.name").equals(this.nameProperty.get())) {
+                    break;
+                }
+                boolean readiness = Boolean.parseBoolean(message.value("user.readiness"));
+                Platform.runLater(() -> this.readinessProperty.set(readiness));
+            }
+            default -> {
+                throw new RuntimeException("Unknown action: " + message.value("action"));
+            }
+        }
     }
 }

@@ -40,6 +40,7 @@ public final class FXApp implements FXController {
         this.dispatcher.addHandler("lobby.userAdded", players);
         this.dispatcher.addHandler("lobby.userRemoved", players);
         this.dispatcher.addHandler("user.readinessChanged", players);
+        this.dispatcher.addHandler("user.readinessChanged", user);
 
         Node node = new FXMLComponent(
                 this.getClass().getResource("/marksman/client/lobby/user.fxml"),

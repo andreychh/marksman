@@ -56,7 +56,6 @@ public final class Application extends javafx.application.Application {
                             )
                     );
                 }
-
                 case "lobby" -> {
                     root.lobbyScreen(
                             new marksman.client.lobby.user.User(
