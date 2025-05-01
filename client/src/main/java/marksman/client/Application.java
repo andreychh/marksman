@@ -6,7 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import marksman.client.lobby.players.InputAsPlayers;
 import marksman.shared.network.Connection;
 import marksman.shared.network.LoggedMessageHandler;
 import marksman.shared.network.Message;
@@ -65,9 +64,27 @@ public final class Application extends javafx.application.Application {
                             ),
                             new marksman.client.lobby.players.Players(
                                     FXCollections.observableArrayList(
-                                            new InputAsPlayers(message.value("lobby.users")).players()
+                                            new marksman.client.lobby.players.InputAsPlayers(
+                                                    message.value("lobby.users")
+                                            ).players()
                                     )
                             )
+                    );
+                }
+                case "game" -> {
+                    root.gameScreen(
+                            new marksman.client.game.user.User(
+                                    stream,
+                                    new SimpleStringProperty(message.value("user.name"))
+                            ),
+                            new marksman.client.game.players.Players(
+                                    FXCollections.observableArrayList(
+                                            new marksman.client.game.players.InputAsPlayers(
+                                                    message.value("game.users")
+                                            ).players()
+                                    )
+                            ),
+                            new marksman.client.game.field.Field()
                     );
                 }
                 default -> {

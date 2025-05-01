@@ -51,7 +51,11 @@ public final class Main {
             // lobby.send(environment);
             // game = new Game(env);
             // game.start();
-            lobby.send(new Message().with("action", "game.start"));
+            lobby.send(new Message()
+                    .with("action", "app.screenChanged")
+                    .with("user.name", "USER")
+                    .with("game.users", "null")
+                    .with("screen.name", "game"));
         });
 
         Application application = new Application(12345, dispatcher);

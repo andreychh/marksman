@@ -61,4 +61,32 @@ public final class FXApp implements FXController {
 
         Platform.runLater(() -> this.root.getChildren().setAll(node));
     }
+
+    public void gameScreen(
+            final marksman.client.game.user.User user,
+            final marksman.client.game.players.Players players,
+            final marksman.client.game.field.Field field
+    ) {
+        Node node = new FXMLComponent(
+                this.getClass().getResource("/marksman/client/game/user.fxml"),
+                cls -> {
+                    switch (cls.getName()) {
+                        case "marksman.client.game.user.FXUser" -> {
+                            return new marksman.client.game.user.FXUser(user);
+                        }
+                        case "marksman.client.game.players.FXPlayers" -> {
+                            return new marksman.client.game.players.FXPlayers(players);
+                        }
+                        case "marksman.client.game.field.FXField" -> {
+                            return new marksman.client.game.field.FXField(field);
+                        }
+                        default -> {
+                            throw new RuntimeException("Unknown class: " + cls);
+                        }
+                    }
+                }
+        ).parent();
+
+        Platform.runLater(() -> this.root.getChildren().setAll(node));
+    }
 }
