@@ -31,7 +31,7 @@ public final class Players implements MessageHandler {
         return this.players.stream()
                 .filter(player -> player.nameProperty().get().equals(name))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new RuntimeException("Player not found: " + name));
     }
 
     public ObservableList<Player> listProperty() {
@@ -48,11 +48,7 @@ public final class Players implements MessageHandler {
                 this.remove(message.value("user.name"));
             }
             case "user.readinessChanged" -> {
-                try {
-                    this.get(message.value("user.name")).handleMessage(message, stream);
-                } catch (Exception _) {
-
-                }
+                this.get(message.value("user.name")).handleMessage(message, stream);
             }
             default -> {
                 throw new RuntimeException("Unknown action: " + message.value("action"));
