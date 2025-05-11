@@ -4,15 +4,15 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
-import marksman.shared.network.MessageDispatcher;
+import marksman.shared.network.MessageBus;
 
 public final class FXApp implements FXController {
-    private final MessageDispatcher dispatcher;
+    private final MessageBus messageBus;
     @FXML
     private StackPane root;
 
-    public FXApp(final MessageDispatcher dispatcher) {
-        this.dispatcher = dispatcher;
+    public FXApp(final MessageBus messageBus) {
+        this.messageBus = messageBus;
     }
 
     public void loginScreen(final marksman.client.login.user.User user) {
@@ -37,10 +37,10 @@ public final class FXApp implements FXController {
             final marksman.client.lobby.user.User user,
             final marksman.client.lobby.players.Players players
     ) {
-        this.dispatcher.addHandler("lobby.userAdded", players);
-        this.dispatcher.addHandler("lobby.userRemoved", players);
-        this.dispatcher.addHandler("user.readinessChanged", players);
-        this.dispatcher.addHandler("user.readinessChanged", user);
+        this.messageBus.addHandler("lobby.userAdded", players);
+        this.messageBus.addHandler("lobby.userRemoved", players);
+        this.messageBus.addHandler("user.readinessChanged", players);
+        this.messageBus.addHandler("user.readinessChanged", user);
 
         Node node = new FXMLComponent(
                 this.getClass().getResource("/marksman/client/lobby/user.fxml"),

@@ -23,20 +23,12 @@ public final class FXUser implements FXController, Initializable {
 
     @FXML
     private void onFireButtonAction(final ActionEvent event) {
-        try {
-            this.user.fire();
-        } catch (Exception e) {
-            throw new RuntimeException(e); // todo: show error message
-        }
+        this.user.fire();
     }
 
     @FXML
     private void onPauseButtonAction(final ActionEvent event) {
-        try {
-            this.user.pauseGame();
-        } catch (Exception e) {
-            throw new RuntimeException(e); // todo: show error message
-        }
+        this.user.pauseGame();
     }
 
     @Override

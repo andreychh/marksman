@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import marksman.client.FXController;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -29,8 +28,6 @@ public final class FXUser implements FXController, Initializable {
             this.user.rename(nameTextField.getText());
             this.user.joinLobby();
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e); // todo: show error message
-        } catch (IOException e) {
             throw new RuntimeException(e); // todo: show error message
         }
     }

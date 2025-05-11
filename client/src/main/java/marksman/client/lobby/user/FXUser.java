@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import marksman.client.FXController;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -32,19 +31,11 @@ public final class FXUser implements FXController, Initializable {
 
     @FXML
     private void onToggleReadinessButtonAction(final ActionEvent actionEvent) {
-        try {
-            this.user.toggleReadiness();
-        } catch (IOException e) {
-            throw new RuntimeException(e); // todo: show error message
-        }
+        this.user.toggleReadiness();
     }
 
     @FXML
     private void onLeaveLobbyButtonAction(final ActionEvent actionEvent) {
-        try {
-            this.user.leaveLobby();
-        } catch (IOException e) {
-            throw new RuntimeException(e); // todo: show error message
-        }
+        this.user.leaveLobby();
     }
 }

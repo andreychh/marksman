@@ -2,10 +2,9 @@ package marksman.client.game.player;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
+import marksman.shared.network.Connection;
 import marksman.shared.network.Message;
 import marksman.shared.network.MessageHandler;
-
-import java.io.OutputStream;
 
 public final class Player implements MessageHandler {
     private final StringProperty nameProperty;
@@ -35,7 +34,7 @@ public final class Player implements MessageHandler {
     }
 
     @Override
-    public void handleMessage(final Message message, final OutputStream stream) {
+    public void handleMessage(final Message message, final Connection connection) {
         switch (message.value("action")) {
             case "user.updateShoots" -> {
                 this.shootsProperty.set(Integer.parseInt(message.value("user.shoots")));

@@ -3,39 +3,35 @@ package marksman.client.lobby.user;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
+import marksman.shared.network.Connection;
 import marksman.shared.network.Message;
 import marksman.shared.network.MessageHandler;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 public final class User implements MessageHandler {
-    private final OutputStream stream;
+    private final Connection connection;
     private final StringProperty nameProperty;
     private final BooleanProperty readinessProperty;
 
     public User(
-            final OutputStream stream,
+            final Connection connection,
             final StringProperty nameProperty,
             final BooleanProperty readinessProperty
     ) {
-        this.stream = stream;
+        this.connection = connection;
         this.nameProperty = nameProperty;
         this.readinessProperty = readinessProperty;
     }
 
-    public void toggleReadiness() throws IOException {
-        new Message()
+    public void toggleReadiness() {
+        this.connection.sendMessage(new Message()
                 .with("action", "user.toggleReadiness")
-                .with("user.name", this.nameProperty.get())
-                .writeTo(this.stream);
+                .with("user.name", this.nameProperty.get()));
     }
 
-    public void leaveLobby() throws IOException {
-        new Message()
+    public void leaveLobby() {
+        this.connection.sendMessage(new Message()
                 .with("action", "user.leaveLobby")
-                .with("user.name", this.nameProperty.get())
-                .writeTo(this.stream);
+                .with("user.name", this.nameProperty.get()));
     }
 
     public BooleanProperty readinessProperty() {
@@ -43,7 +39,7 @@ public final class User implements MessageHandler {
     }
 
     @Override
-    public void handleMessage(final Message message, final OutputStream stream) {
+    public void handleMessage(final Message message, final Connection connection) {
         switch (message.value("action")) {
             case "user.readinessChanged" -> {
                 if (!message.value("user.name").equals(this.nameProperty.get())) {

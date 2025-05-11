@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import marksman.shared.network.Connection;
 import marksman.shared.network.LoggedMessageHandler;
 import marksman.shared.network.Message;
-import marksman.shared.network.MessageDispatcher;
+import marksman.shared.network.MessageBus;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -25,15 +25,16 @@ public final class Application extends javafx.application.Application {
 
     @Override
     public void start(final Stage primaryStage) throws IOException {
-        MessageDispatcher dispatcher = new MessageDispatcher();
+        MessageBus messageBus = new MessageBus();
         Connection connection = new Connection(
                 this.connect(new InetSocketAddress("localhost", 12345), 5, 5000),
-                new LoggedMessageHandler(dispatcher)
+                new LoggedMessageHandler(messageBus)
         );
         connection.start();
 
-        Scene scene = new Scene(this.root(dispatcher));
-        new Message().with("action", "app.connect").writeTo(connection.outputStream());
+        Scene scene = new Scene(this.root(messageBus));
+        connection.sendMessage(new Message()
+                .with("action", "app.connect"));
 
         primaryStage.setTitle("Marksman");
         primaryStage.setResizable(false);
@@ -42,15 +43,15 @@ public final class Application extends javafx.application.Application {
     }
 
     // todo: refactor
-    private Parent root(final MessageDispatcher dispatcher) {
-        FXApp root = new FXApp(dispatcher);
+    private Parent root(final MessageBus messageBus) {
+        FXApp root = new FXApp(messageBus);
 
-        dispatcher.addHandler("app.screenChanged", (message, stream) -> {
+        messageBus.addHandler("app.screenChanged", (message, connection) -> {
             switch (message.value("screen.name")) {
                 case "login" -> {
                     root.loginScreen(
                             new marksman.client.login.user.User(
-                                    stream,
+                                    connection,
                                     new SimpleStringProperty(message.value("user.name"))
                             )
                     );
@@ -58,7 +59,7 @@ public final class Application extends javafx.application.Application {
                 case "lobby" -> {
                     root.lobbyScreen(
                             new marksman.client.lobby.user.User(
-                                    stream,
+                                    connection,
                                     new SimpleStringProperty(message.value("user.name")),
                                     new SimpleBooleanProperty(Boolean.parseBoolean(message.value("user.readiness")))
                             ),
@@ -74,7 +75,7 @@ public final class Application extends javafx.application.Application {
                 case "game" -> {
                     root.gameScreen(
                             new marksman.client.game.user.User(
-                                    stream,
+                                    connection,
                                     new SimpleStringProperty(message.value("user.name"))
                             ),
                             new marksman.client.game.players.Players(

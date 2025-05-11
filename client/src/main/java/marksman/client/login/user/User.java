@@ -1,17 +1,15 @@
 package marksman.client.login.user;
 
 import javafx.beans.property.StringProperty;
+import marksman.shared.network.Connection;
 import marksman.shared.network.Message;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 public final class User {
-    private final OutputStream stream;
+    private final Connection connection;
     private final StringProperty nameProperty;
 
-    public User(final OutputStream stream, final StringProperty nameProperty) {
-        this.stream = stream;
+    public User(final Connection connection, final StringProperty nameProperty) {
+        this.connection = connection;
         this.nameProperty = nameProperty;
     }
 
@@ -22,11 +20,11 @@ public final class User {
         this.nameProperty.set(name);
     }
 
-    public void joinLobby() throws IOException {
-        new Message()
+    public void joinLobby() {
+        this.connection.sendMessage(new Message()
                 .with("action", "user.joinLobby")
                 .with("user.name", this.nameProperty.get())
-                .writeTo(this.stream);
+        );
     }
 
     public StringProperty nameProperty() {

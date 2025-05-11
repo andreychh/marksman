@@ -4,10 +4,9 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import marksman.client.lobby.player.Player;
+import marksman.shared.network.Connection;
 import marksman.shared.network.Message;
 import marksman.shared.network.MessageHandler;
-
-import java.io.OutputStream;
 
 public final class Players implements MessageHandler {
     private final ObservableList<Player> players;
@@ -39,7 +38,7 @@ public final class Players implements MessageHandler {
     }
 
     @Override
-    public void handleMessage(final Message message, final OutputStream stream) {
+    public void handleMessage(final Message message, final Connection connection) {
         switch (message.value("action")) {
             case "lobby.userAdded" -> {
                 this.add(message.value("user.name"), Boolean.parseBoolean(message.value("user.readiness")));
@@ -48,7 +47,7 @@ public final class Players implements MessageHandler {
                 this.remove(message.value("user.name"));
             }
             case "user.readinessChanged" -> {
-                this.get(message.value("user.name")).handleMessage(message, stream);
+                this.get(message.value("user.name")).handleMessage(message, connection);
             }
             default -> {
                 throw new RuntimeException("Unknown action: " + message.value("action"));

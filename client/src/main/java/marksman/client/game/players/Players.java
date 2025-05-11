@@ -2,10 +2,9 @@ package marksman.client.game.players;
 
 import javafx.collections.ObservableList;
 import marksman.client.game.player.Player;
+import marksman.shared.network.Connection;
 import marksman.shared.network.Message;
 import marksman.shared.network.MessageHandler;
-
-import java.io.OutputStream;
 
 public final class Players implements MessageHandler {
     private final ObservableList<Player> players;
@@ -26,10 +25,10 @@ public final class Players implements MessageHandler {
     }
 
     @Override
-    public void handleMessage(final Message message, final OutputStream stream) {
+    public void handleMessage(final Message message, final Connection connection) {
         switch (message.value("action")) {
             case "user.updateShoots", "user.updateHits" -> {
-                this.get(message.value("user.name")).handleMessage(message, stream);
+                this.get(message.value("user.name")).handleMessage(message, connection);
             }
             default -> {
                 throw new RuntimeException("Unknown action: " + message.value("action"));
