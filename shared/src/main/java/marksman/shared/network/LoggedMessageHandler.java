@@ -1,7 +1,5 @@
 package marksman.shared.network;
 
-import java.io.OutputStream;
-
 public final class LoggedMessageHandler implements MessageHandler {
     private final MessageHandler origin;
 
@@ -10,8 +8,8 @@ public final class LoggedMessageHandler implements MessageHandler {
     }
 
     @Override
-    public void handleMessage(final Message message, final OutputStream stream) {
+    public void handleMessage(final Message message, final Connection connection) {
         System.out.println("Received message: " + message.content());
-        this.origin.handleMessage(message, stream);
+        this.origin.handleMessage(message, connection);
     }
 }

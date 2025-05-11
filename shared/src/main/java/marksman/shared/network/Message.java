@@ -1,7 +1,5 @@
 package marksman.shared.network;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,11 +28,6 @@ public final class Message {
         Map<String, String> args = new HashMap<>(this.args);
         args.put(name, value);
         return new Message(args);
-    }
-
-    public void writeTo(final OutputStream stream) throws IOException {
-        stream.write(this.content().getBytes());
-        stream.flush();
     }
 
     public String content() {

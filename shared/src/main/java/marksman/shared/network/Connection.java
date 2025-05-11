@@ -3,10 +3,9 @@ package marksman.shared.network;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.Socket;
 
-public final class Connection implements AutoCloseable {
+public final class Connection implements AutoCloseable, MessageSender {
     private final Socket socket;
     private final MessageHandler handler;
 
@@ -19,6 +18,25 @@ public final class Connection implements AutoCloseable {
         new Thread(this::loop).start();
     }
 
+    @Override
+    public void sendMessage(final Message message) {
+        try {
+            this.socket.getOutputStream().write(message.content().getBytes());
+            this.socket.getOutputStream().flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e); // todo: Handle exception
+        }
+    }
+
+    @Override
+    public void close() {
+        try {
+            this.socket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e); // todo: Handle exception
+        }
+    }
+
     private void loop() {
         try (var in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()))) {
             while (true) {
@@ -26,19 +44,10 @@ public final class Connection implements AutoCloseable {
                 if (line == null) {
                     break;
                 }
-                handler.handleMessage(new InputAsMessage(line).message(), this.outputStream());
+                handler.handleMessage(new InputAsMessage(line).message(), this);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e); // todo: Handle exception
         }
-    }
-
-    @Override
-    public void close() throws IOException {
-        this.socket.close();
-    }
-
-    public OutputStream outputStream() throws IOException {
-        return this.socket.getOutputStream();
     }
 }
