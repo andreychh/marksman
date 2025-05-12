@@ -25,4 +25,9 @@ public final class MemoryLobbyUser implements LobbyUser {
     public boolean isReady() {
         return isReady;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s~%s", name, isReady);
+    }
 }

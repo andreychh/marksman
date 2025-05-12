@@ -27,9 +27,14 @@ public final class TransmittableLobbyUser implements LobbyUser {
     public void toggleReadiness() {
         this.origin.toggleReadiness();
         this.sender.sendMessage(new Message()
-                .with("action", "user.toggleReadiness")
+                .with("action", "user.readinessChanged")
                 .with("user.name", this.origin.name())
                 .with("user.readiness", String.valueOf(this.origin.isReady()))
         );
+    }
+
+    @Override
+    public String toString() {
+        return this.origin.toString();
     }
 }

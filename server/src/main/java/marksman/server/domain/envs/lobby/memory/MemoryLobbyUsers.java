@@ -4,6 +4,7 @@ import marksman.server.domain.envs.lobby.LobbyUser;
 import marksman.server.domain.envs.lobby.LobbyUsers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class MemoryLobbyUsers implements LobbyUsers {
     private final List<LobbyUser> users;
@@ -41,5 +42,16 @@ public final class MemoryLobbyUsers implements LobbyUsers {
     @Override
     public boolean isReady() {
         return this.users.stream().allMatch(LobbyUser::isReady);
+    }
+
+    @Override
+    public String toString() {
+        if (this.users.isEmpty()) {
+            return "null";
+        }
+        return this.users
+                .stream()
+                .map(LobbyUser::toString)
+                .collect(Collectors.joining("%"));
     }
 }

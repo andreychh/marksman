@@ -34,7 +34,7 @@ public final class TransmittableLobbyUsers implements LobbyUsers {
 
     @Override
     public LobbyUser get(final String username) {
-        return this.origin.get(username);
+        return new TransmittableLobbyUser(this.origin.get(username), this.sender);
     }
 
     @Override
@@ -45,5 +45,10 @@ public final class TransmittableLobbyUsers implements LobbyUsers {
     @Override
     public boolean isReady() {
         return this.origin.isReady();
+    }
+
+    @Override
+    public String toString() {
+        return this.origin.toString();
     }
 }
