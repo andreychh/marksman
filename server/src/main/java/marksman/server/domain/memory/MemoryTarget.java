@@ -6,6 +6,9 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Polygon;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public final class MemoryTarget implements Target {
     private final int id;
     private final DataSource dataSource;
@@ -26,6 +29,16 @@ public final class MemoryTarget implements Target {
     }
 
     @Override
+    public Point center() {
+        return this.dataSource.targetData().get(this.id).center;
+    }
+
+    @Override
+    public int id() {
+        return this.id;
+    }
+
+    @Override
     public Polygon polygon() {
         Coordinate[] coordinates = new Coordinate[10 + 1];
         for (int i = 0; i < 10; i++) {
@@ -38,8 +51,11 @@ public final class MemoryTarget implements Target {
         return new GeometryFactory().createPolygon(coordinates);
     }
 
-    private Point center() {
-        return this.dataSource.targetData().get(this.id).center;
+    @Override
+    public String toString() {
+        return Arrays.stream(this.polygon().getCoordinates())
+                .map(c -> new Point(c.x, c.y).toString())
+                .collect(Collectors.joining("%"));
     }
 
     private double radius() {

@@ -1,9 +1,19 @@
 package marksman.server;
 
+import marksman.server.domain.Environment;
+import marksman.server.domain.Game;
+import marksman.server.domain.Targets;
 import marksman.server.domain.envs.lobby.LobbyUser;
 import marksman.server.domain.envs.lobby.LobbyUsers;
 import marksman.server.domain.envs.lobby.memory.MemoryLobbyUsers;
 import marksman.server.domain.envs.lobby.transmittable.TransmittableLobbyUsers;
+import marksman.server.domain.memory.DataSource;
+import marksman.server.domain.memory.MemoryField;
+import marksman.server.domain.memory.MemoryFields;
+import marksman.server.domain.memory.MemoryTargets;
+import marksman.server.domain.transmittable.TransmittableTargets;
+import marksman.shared.geometry.Point;
+import marksman.shared.geometry.Size;
 import marksman.shared.network.Connections;
 import marksman.shared.network.Message;
 import marksman.shared.network.MessageBus;
@@ -52,15 +62,20 @@ public final class Main {
                 return;
             }
 
-            // environment = new Environment();
-            // lobby.send(environment);
-            // game = new Game(env);
-            // game.start();
             connections.sendMessage(new Message()
                     .with("action", "app.screenChanged")
                     .with("user.name", "USER")
                     .with("game.users", "null")
                     .with("screen.name", "game"));
+
+            DataSource dataSource = new DataSource();
+            Targets targets = new TransmittableTargets(new MemoryTargets(dataSource), connections);
+            targets.add(new Point(5, 5), 5.0, new Point(1, 1));
+            MemoryFields fields = new MemoryFields(dataSource);
+            MemoryField field = fields.add(new Point(0, 0), new Size(50, 50));
+            Environment environment = new Environment(targets, field);
+            Game game = new Game(environment);
+            game.start();
         });
 
         Application application = new Application(12345, messageBus);
