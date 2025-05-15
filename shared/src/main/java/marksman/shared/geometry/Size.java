@@ -1,19 +1,19 @@
 package marksman.shared.geometry;
 
 public final class Size {
-    private final int width;
-    private final int height;
+    private final double width;
+    private final double height;
 
-    public Size(final int width, final int height) {
+    public Size(final double width, final double height) {
         this.width = width;
         this.height = height;
     }
 
-    public int width() {
+    public double width() {
         return width;
     }
 
-    public int height() {
+    public double height() {
         return height;
     }
 }
