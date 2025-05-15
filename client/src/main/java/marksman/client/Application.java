@@ -52,7 +52,7 @@ public final class Application extends javafx.application.Application {
                     root.loginScreen(
                             new marksman.client.login.user.User(
                                     connection,
-                                    new SimpleStringProperty(message.value("user.name"))
+                                    message.value("user.name")
                             )
                     );
                 }

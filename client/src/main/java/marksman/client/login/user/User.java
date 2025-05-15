@@ -1,5 +1,6 @@
 package marksman.client.login.user;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import marksman.shared.network.Connection;
 import marksman.shared.network.Message;
@@ -13,7 +14,12 @@ public final class User {
         this.nameProperty = nameProperty;
     }
 
+    public User(final Connection connection, final String name) {
+        this(connection, new SimpleStringProperty(name));
+    }
+
     public void rename(final String name) {
+        // todo: move validation to server side
         if (name.isBlank()) {
             throw new IllegalArgumentException("Name cannot be blank");
         }
