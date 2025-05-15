@@ -1,7 +1,7 @@
-package marksman.server.domain.envs.lobby.memory;
+package marksman.server.domain.lobby.memory;
 
-import marksman.server.domain.envs.lobby.LobbyUser;
-import marksman.server.domain.envs.lobby.LobbyUsers;
+import marksman.server.domain.lobby.LobbyUser;
+import marksman.server.domain.lobby.LobbyUsers;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,4 +1,4 @@
-package marksman.server.domain;
+package marksman.server.domain.game;
 
 import marksman.shared.geometry.Point;
 

@@ -1,4 +1,4 @@
-package marksman.server.domain.envs.lobby;
+package marksman.server.domain.lobby;
 
 public interface LobbyUsers {
     LobbyUser add(String name, boolean isReady);

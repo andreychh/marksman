@@ -1,4 +1,4 @@
-package marksman.server.domain.memory;
+package marksman.server.domain.game.memory;
 
 import marksman.shared.geometry.Point;
 import marksman.shared.geometry.Size;

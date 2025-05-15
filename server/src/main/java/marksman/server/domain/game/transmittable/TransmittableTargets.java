@@ -1,7 +1,7 @@
-package marksman.server.domain.transmittable;
+package marksman.server.domain.game.transmittable;
 
-import marksman.server.domain.Target;
-import marksman.server.domain.Targets;
+import marksman.server.domain.game.Target;
+import marksman.server.domain.game.Targets;
 import marksman.shared.geometry.Point;
 import marksman.shared.network.Message;
 import marksman.shared.network.MessageSender;

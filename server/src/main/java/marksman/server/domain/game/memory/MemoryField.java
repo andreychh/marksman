@@ -1,6 +1,6 @@
-package marksman.server.domain.memory;
+package marksman.server.domain.game.memory;
 
-import marksman.server.domain.Geometry;
+import marksman.server.domain.game.Geometry;
 import marksman.shared.geometry.Size;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;

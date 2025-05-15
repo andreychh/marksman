@@ -1,7 +1,7 @@
-package marksman.server.domain.envs.lobby.transmittable;
+package marksman.server.domain.lobby.transmittable;
 
-import marksman.server.domain.envs.lobby.LobbyUser;
-import marksman.server.domain.envs.lobby.LobbyUsers;
+import marksman.server.domain.lobby.LobbyUser;
+import marksman.server.domain.lobby.LobbyUsers;
 import marksman.shared.network.Message;
 import marksman.shared.network.MessageSender;
 

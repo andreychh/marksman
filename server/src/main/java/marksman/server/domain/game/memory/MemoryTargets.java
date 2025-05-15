@@ -1,6 +1,6 @@
-package marksman.server.domain.memory;
+package marksman.server.domain.game.memory;
 
-import marksman.server.domain.Targets;
+import marksman.server.domain.game.Targets;
 import marksman.shared.geometry.Point;
 
 import java.util.List;

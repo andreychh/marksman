@@ -1,6 +1,6 @@
-package marksman.server.domain.envs.lobby.memory;
+package marksman.server.domain.lobby.memory;
 
-import marksman.server.domain.envs.lobby.LobbyUser;
+import marksman.server.domain.lobby.LobbyUser;
 
 public final class MemoryLobbyUser implements LobbyUser {
     private final String name;

@@ -1,6 +1,6 @@
-package marksman.server.domain;
+package marksman.server.domain.game;
 
-import marksman.server.domain.memory.MemoryField;
+import marksman.server.domain.game.memory.MemoryField;
 
 public final class Environment {
     private final Targets targets;

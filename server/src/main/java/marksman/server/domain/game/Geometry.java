@@ -1,4 +1,4 @@
-package marksman.server.domain;
+package marksman.server.domain.game;
 
 import org.locationtech.jts.geom.Polygon;
 

@@ -1,4 +1,4 @@
-package marksman.server.domain;
+package marksman.server.domain.game;
 
 // todo: rename
 public final class Game {
