@@ -2,9 +2,9 @@ package marksman.client.game.player;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
-import marksman.shared.network.Connection;
-import marksman.shared.network.MessageReceiver;
-import marksman.shared.network.ReceivedMessage;
+import marksman.shared.network.connecting.Connection;
+import marksman.shared.network.messaging.MessageReceiver;
+import marksman.shared.network.messaging.ReceivedMessage;
 
 public final class Player implements MessageReceiver {
     private final StringProperty nameProperty;

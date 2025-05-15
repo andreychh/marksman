@@ -14,9 +14,9 @@ import marksman.server.domain.game.memory.MemoryTargets;
 import marksman.server.domain.game.transmittable.TransmittableTargets;
 import marksman.shared.geometry.Point;
 import marksman.shared.geometry.Size;
-import marksman.shared.network.Connections;
-import marksman.shared.network.Message;
-import marksman.shared.network.MessageBus;
+import marksman.shared.network.connecting.Connections;
+import marksman.shared.network.messaging.Message;
+import marksman.shared.network.messaging.MessageBus;
 
 import java.util.ArrayList;
 

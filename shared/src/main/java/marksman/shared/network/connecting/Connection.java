@@ -1,4 +1,9 @@
-package marksman.shared.network;
+package marksman.shared.network.connecting;
+
+import marksman.shared.network.messaging.InputAsMessage;
+import marksman.shared.network.messaging.MessageReceiver;
+import marksman.shared.network.messaging.MessageSender;
+import marksman.shared.network.messaging.SendableMessage;
 
 import java.io.BufferedReader;
 import java.io.IOException;

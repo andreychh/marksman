@@ -2,9 +2,9 @@ package marksman.client.game.players;
 
 import javafx.collections.ObservableList;
 import marksman.client.game.player.Player;
-import marksman.shared.network.Connection;
-import marksman.shared.network.MessageReceiver;
-import marksman.shared.network.ReceivedMessage;
+import marksman.shared.network.connecting.Connection;
+import marksman.shared.network.messaging.MessageReceiver;
+import marksman.shared.network.messaging.ReceivedMessage;
 
 public final class Players implements MessageReceiver {
     private final ObservableList<Player> players;

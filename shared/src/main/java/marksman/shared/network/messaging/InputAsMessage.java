@@ -1,4 +1,4 @@
-package marksman.shared.network;
+package marksman.shared.network.messaging;
 
 import java.util.InputMismatchException;
 

@@ -1,4 +1,6 @@
-package marksman.shared.network;
+package marksman.shared.network.messaging;
+
+import marksman.shared.network.connecting.Connection;
 
 public final class LoggedMessageReceiver implements MessageReceiver {
     private final MessageReceiver origin;

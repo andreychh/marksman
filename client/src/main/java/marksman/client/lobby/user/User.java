@@ -3,10 +3,10 @@ package marksman.client.lobby.user;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
-import marksman.shared.network.Connection;
-import marksman.shared.network.Message;
-import marksman.shared.network.MessageReceiver;
-import marksman.shared.network.ReceivedMessage;
+import marksman.shared.network.connecting.Connection;
+import marksman.shared.network.messaging.Message;
+import marksman.shared.network.messaging.MessageReceiver;
+import marksman.shared.network.messaging.ReceivedMessage;
 
 public final class User implements MessageReceiver {
     private final Connection connection;

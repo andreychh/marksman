@@ -4,7 +4,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
-import marksman.shared.network.MessageBus;
+import marksman.shared.network.messaging.MessageBus;
 
 public final class FXApp implements FXController {
     private final MessageBus messageBus;

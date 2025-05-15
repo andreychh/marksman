@@ -1,8 +1,8 @@
 package marksman.server;
 
-import marksman.shared.network.Connection;
-import marksman.shared.network.LoggedMessageReceiver;
-import marksman.shared.network.MessageBus;
+import marksman.shared.network.connecting.Connection;
+import marksman.shared.network.messaging.LoggedMessageReceiver;
+import marksman.shared.network.messaging.MessageBus;
 
 import java.io.IOException;
 import java.net.ServerSocket;

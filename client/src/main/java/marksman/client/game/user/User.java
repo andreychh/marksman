@@ -1,8 +1,8 @@
 package marksman.client.game.user;
 
 import javafx.beans.property.StringProperty;
-import marksman.shared.network.Connection;
-import marksman.shared.network.Message;
+import marksman.shared.network.connecting.Connection;
+import marksman.shared.network.messaging.Message;
 
 public final class User {
     private final Connection connection;

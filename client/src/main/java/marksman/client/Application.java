@@ -6,10 +6,10 @@ import javafx.collections.FXCollections;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import marksman.shared.network.Connection;
-import marksman.shared.network.LoggedMessageReceiver;
-import marksman.shared.network.Message;
-import marksman.shared.network.MessageBus;
+import marksman.shared.network.connecting.Connection;
+import marksman.shared.network.messaging.LoggedMessageReceiver;
+import marksman.shared.network.messaging.Message;
+import marksman.shared.network.messaging.MessageBus;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

@@ -1,4 +1,6 @@
-package marksman.shared.network;
+package marksman.shared.network.messaging;
+
+import marksman.shared.network.connecting.Connection;
 
 import java.util.ArrayList;
 import java.util.HashMap;

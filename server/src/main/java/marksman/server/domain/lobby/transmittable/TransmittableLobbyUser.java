@@ -1,8 +1,8 @@
 package marksman.server.domain.lobby.transmittable;
 
 import marksman.server.domain.lobby.LobbyUser;
-import marksman.shared.network.Message;
-import marksman.shared.network.MessageSender;
+import marksman.shared.network.messaging.Message;
+import marksman.shared.network.messaging.MessageSender;
 
 public final class TransmittableLobbyUser implements LobbyUser {
     private final LobbyUser origin;

@@ -2,8 +2,8 @@ package marksman.server.domain.game.transmittable;
 
 import marksman.server.domain.game.Target;
 import marksman.shared.geometry.Point;
-import marksman.shared.network.Message;
-import marksman.shared.network.MessageSender;
+import marksman.shared.network.messaging.Message;
+import marksman.shared.network.messaging.MessageSender;
 import org.locationtech.jts.geom.Polygon;
 
 public final class TransmittableTarget implements Target {

@@ -1,4 +1,7 @@
-package marksman.shared.network;
+package marksman.shared.network.connecting;
+
+import marksman.shared.network.messaging.MessageSender;
+import marksman.shared.network.messaging.SendableMessage;
 
 import java.util.List;
 
