@@ -3,10 +3,10 @@ package marksman.client.game.player;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import marksman.shared.network.Connection;
-import marksman.shared.network.Message;
-import marksman.shared.network.MessageHandler;
+import marksman.shared.network.MessageReceiver;
+import marksman.shared.network.ReceivedMessage;
 
-public final class Player implements MessageHandler {
+public final class Player implements MessageReceiver {
     private final StringProperty nameProperty;
     private final IntegerProperty shootsProperty;
     private final IntegerProperty hitsProperty;
@@ -34,7 +34,7 @@ public final class Player implements MessageHandler {
     }
 
     @Override
-    public void handleMessage(final Message message, final Connection connection) {
+    public void receiveMessage(final ReceivedMessage message, final Connection connection) {
         switch (message.value("action")) {
             case "user.updateShoots" -> {
                 this.shootsProperty.set(Integer.parseInt(message.value("user.shoots")));

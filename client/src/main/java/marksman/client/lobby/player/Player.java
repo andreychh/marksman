@@ -3,10 +3,10 @@ package marksman.client.lobby.player;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 import marksman.shared.network.Connection;
-import marksman.shared.network.Message;
-import marksman.shared.network.MessageHandler;
+import marksman.shared.network.MessageReceiver;
+import marksman.shared.network.ReceivedMessage;
 
-public final class Player implements MessageHandler {
+public final class Player implements MessageReceiver {
     private final StringProperty nameProperty;
     private final BooleanProperty readinessProperty;
 
@@ -24,7 +24,7 @@ public final class Player implements MessageHandler {
     }
 
     @Override
-    public void handleMessage(final Message message, final Connection connection) {
+    public void receiveMessage(final ReceivedMessage message, final Connection connection) {
         switch (message.value("action")) {
             case "user.readinessChanged" -> {
                 this.readinessProperty.set(Boolean.parseBoolean(message.value("user.readiness")));

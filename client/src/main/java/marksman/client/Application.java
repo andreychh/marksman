@@ -7,7 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import marksman.shared.network.Connection;
-import marksman.shared.network.LoggedMessageHandler;
+import marksman.shared.network.LoggedMessageReceiver;
 import marksman.shared.network.Message;
 import marksman.shared.network.MessageBus;
 
@@ -28,7 +28,7 @@ public final class Application extends javafx.application.Application {
         MessageBus messageBus = new MessageBus();
         Connection connection = new Connection(
                 this.connect(new InetSocketAddress("localhost", 12345), 5, 5000),
-                new LoggedMessageHandler(messageBus)
+                new LoggedMessageReceiver(messageBus)
         );
         connection.start();
 

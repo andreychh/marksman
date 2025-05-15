@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public final class Message {
+public final class Message implements SendableMessage, ReceivedMessage {
     private final Map<String, String> args;
 
     public Message(final Map<String, String> args) {

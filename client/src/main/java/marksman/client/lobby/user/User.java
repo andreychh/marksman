@@ -5,9 +5,10 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 import marksman.shared.network.Connection;
 import marksman.shared.network.Message;
-import marksman.shared.network.MessageHandler;
+import marksman.shared.network.MessageReceiver;
+import marksman.shared.network.ReceivedMessage;
 
-public final class User implements MessageHandler {
+public final class User implements MessageReceiver {
     private final Connection connection;
     private final StringProperty nameProperty;
     private final BooleanProperty readinessProperty;
@@ -39,7 +40,7 @@ public final class User implements MessageHandler {
     }
 
     @Override
-    public void handleMessage(final Message message, final Connection connection) {
+    public void receiveMessage(final ReceivedMessage message, final Connection connection) {
         switch (message.value("action")) {
             case "user.readinessChanged" -> {
                 if (!message.value("user.name").equals(this.nameProperty.get())) {

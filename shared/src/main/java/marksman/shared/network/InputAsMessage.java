@@ -10,7 +10,7 @@ public final class InputAsMessage {
         this.input = input;
     }
 
-    public Message message() {
+    public ReceivedMessage message() {
         Message message = new Message();
         String[] pairs = this.input.split(";");
         for (String pair : pairs) {

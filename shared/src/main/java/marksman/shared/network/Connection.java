@@ -7,11 +7,11 @@ import java.net.Socket;
 
 public final class Connection implements AutoCloseable, MessageSender {
     private final Socket socket;
-    private final MessageHandler handler;
+    private final MessageReceiver receiver;
 
-    public Connection(final Socket socket, final MessageHandler handler) {
+    public Connection(final Socket socket, final MessageReceiver receiver) {
         this.socket = socket;
-        this.handler = handler;
+        this.receiver = receiver;
     }
 
     public void start() {
@@ -19,7 +19,7 @@ public final class Connection implements AutoCloseable, MessageSender {
     }
 
     @Override
-    public void sendMessage(final Message message) {
+    public void sendMessage(final SendableMessage message) {
         try {
             this.socket.getOutputStream().write(message.content().getBytes());
             this.socket.getOutputStream().flush();
@@ -44,7 +44,7 @@ public final class Connection implements AutoCloseable, MessageSender {
                 if (line == null) {
                     break;
                 }
-                handler.handleMessage(new InputAsMessage(line).message(), this);
+                receiver.receiveMessage(new InputAsMessage(line).message(), this);
             }
         } catch (IOException e) {
             throw new RuntimeException(e); // todo: Handle exception

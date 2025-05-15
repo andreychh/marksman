@@ -5,17 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class MessageBus implements MessageHandler {
-    private final Map<String, List<MessageHandler>> handlers = new HashMap<>();
+public final class MessageBus implements MessageReceiver {
+    private final Map<String, List<MessageReceiver>> handlers = new HashMap<>();
 
-    public void addHandler(final String action, final MessageHandler handler) {
+    public void addHandler(final String action, final MessageReceiver handler) {
         if (!handlers.containsKey(action)) {
             handlers.put(action, new ArrayList<>());
         }
         handlers.get(action).add(handler);
     }
 
-    public void removeHandler(final String action, final MessageHandler handler) {
+    public void removeHandler(final String action, final MessageReceiver handler) {
         if (!handlers.containsKey(action)) {
             return;
         }
@@ -23,11 +23,11 @@ public final class MessageBus implements MessageHandler {
     }
 
     @Override
-    public void handleMessage(final Message message, final Connection connection) {
+    public void receiveMessage(final ReceivedMessage message, final Connection connection) {
         String action = message.value("action");
         if (!handlers.containsKey(action)) {
             return;
         }
-        handlers.get(action).forEach(h -> h.handleMessage(message, connection));
+        handlers.get(action).forEach(h -> h.receiveMessage(message, connection));
     }
 }
