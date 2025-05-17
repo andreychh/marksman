@@ -40,6 +40,11 @@ public final class TransmittableTarget implements Target {
     }
 
     @Override
+    public Target withId(final int id) {
+        return new TransmittableTarget(this.origin.withId(id), this.sender);
+    }
+
+    @Override
     public JTSPolygon polygon() {
         return this.origin.polygon();
     }

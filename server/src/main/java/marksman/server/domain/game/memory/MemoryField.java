@@ -10,24 +10,30 @@ import java.util.List;
 
 public final class MemoryField implements Geometry {
     private final int id;
-    private final DataSource dataSource;
+    private final Point center;
+    private final Size size;
 
-    public MemoryField(final int id, final DataSource dataSource) {
+    private MemoryField(final int id, final Point center, final Size size) {
         this.id = id;
-        this.dataSource = dataSource;
+        this.center = center;
+        this.size = size;
+    }
+
+    public MemoryField(final Point center, final Size size) {
+        this(0, center, size);
+    }
+
+    public MemoryField withID(final int id) {
+        return new MemoryField(id, this.center, this.size);
     }
 
     @Override
     public JTSPolygon polygon() {
         List<Point> points = new ArrayList<>();
         points.add(new Point(0, 0));
-        points.add(new Point(this.size().width(), 0));
-        points.add(new Point(this.size().width(), this.size().height()));
-        points.add(new Point(0, this.size().height()));
+        points.add(new Point(this.size.width(), 0));
+        points.add(new Point(this.size.width(), this.size.height()));
+        points.add(new Point(0, this.size.height()));
         return new JTSPolygon(points);
-    }
-
-    private Size size() {
-        return this.dataSource.fieldData().get(this.id).size;
     }
 }

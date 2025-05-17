@@ -9,26 +9,39 @@ import java.util.List;
 
 public final class MemoryTarget implements Target {
     private final int id;
-    private final DataSource dataSource;
+    private Point center;
+    private final double radius;
+    private Point direction;
 
-    public MemoryTarget(final int id, final DataSource dataSource) {
+    private MemoryTarget(final int id, final Point center, final double radius, final Point direction) {
         this.id = id;
-        this.dataSource = dataSource;
+        this.center = center;
+        this.radius = radius;
+        this.direction = direction;
+    }
+
+    public MemoryTarget(final Point center, final double radius, final Point direction) {
+        this(0, center, radius, direction);
+    }
+
+    @Override
+    public MemoryTarget withId(final int id) {
+        return new MemoryTarget(id, this.center, this.radius, this.direction);
     }
 
     @Override
     public void move() {
-        this.dataSource.targetData().get(this.id).center = this.center().translate(this.direction());
+        this.center = this.center.translate(this.direction);
     }
 
     @Override
     public void changeDirection() {
-        this.dataSource.targetData().get(this.id).direction = this.direction().negate();
+        this.direction = this.direction.negate();
     }
 
     @Override
     public Point center() {
-        return this.dataSource.targetData().get(this.id).center;
+        return this.center;
     }
 
     @Override
@@ -41,19 +54,12 @@ public final class MemoryTarget implements Target {
         List<Point> points = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             double angle = 2 * Math.PI * i / 10;
+            // todo: encapsulate logic in Point class
             points.add(new Point(
-                    this.center().x() + this.radius() * Math.cos(angle),
-                    this.center().y() + this.radius() * Math.sin(angle)
+                    this.center.x() + this.radius * Math.cos(angle),
+                    this.center.y() + this.radius * Math.sin(angle)
             ));
         }
         return new JTSPolygon(points);
-    }
-
-    private double radius() {
-        return this.dataSource.targetData().get(this.id).radius;
-    }
-
-    private Point direction() {
-        return this.dataSource.targetData().get(this.id).direction;
     }
 }

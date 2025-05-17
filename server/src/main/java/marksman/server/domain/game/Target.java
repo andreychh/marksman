@@ -10,4 +10,6 @@ public interface Target extends Geometry {
     Point center();
 
     int id();
+
+    Target withId(int id);
 }

@@ -17,13 +17,13 @@ public final class Environment {
     }
 
     private void move() {
-        for (Target t : this.targets.targets()) {
+        for (Target t : this.targets) {
             t.move();
         }
     }
 
     private void checkCollisions() {
-        for (Target t : this.targets.targets()) {
+        for (Target t : this.targets) {
             if (!this.field.contains(t)) {
                 t.changeDirection();
             }

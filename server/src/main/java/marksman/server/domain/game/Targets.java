@@ -1,11 +1,5 @@
 package marksman.server.domain.game;
 
-import marksman.shared.geometry.Point;
-
-import java.util.List;
-
-public interface Targets {
-    List<? extends Target> targets();
-
-    Target add(Point center, double radius, Point direction);
+public interface Targets extends Iterable<Target> {
+    Target add(Target target);
 }
