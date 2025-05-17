@@ -1,5 +1,8 @@
 package marksman.shared.geometry;
 
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+
 public final class Point {
     private final double x;
     private final double y;
@@ -25,8 +28,10 @@ public final class Point {
         return new Point(-this.x(), -this.y());
     }
 
-    @Override
-    public String toString() {
-        return "%f~%f".formatted(this.x, this.y);
+    public Element serialize() {
+        Element element = DocumentHelper.createElement("point");
+        element.addElement("x").addText(String.valueOf(x));
+        element.addElement("y").addText(String.valueOf(y));
+        return element;
     }
 }

@@ -1,6 +1,8 @@
 package marksman.server.domain.game;
 
 import marksman.shared.geometry.Point;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Polygon;
@@ -29,5 +31,11 @@ public final class JTSPolygon {
                         .map(p -> new Coordinate(p.x(), p.y()))
                         .toArray(Coordinate[]::new)
         );
+    }
+
+    public Element serialize() {
+        Element element = DocumentHelper.createElement("points");
+        this.points.forEach(p -> element.add(p.serialize()));
+        return element;
     }
 }

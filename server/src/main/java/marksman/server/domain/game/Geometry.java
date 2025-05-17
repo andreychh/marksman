@@ -10,4 +10,6 @@ public interface Geometry {
     default boolean contains(Geometry geometry) {
         return this.polygon().contains(geometry.polygon());
     }
+
+    int id();
 }

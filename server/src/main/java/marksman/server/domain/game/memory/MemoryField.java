@@ -36,4 +36,9 @@ public final class MemoryField implements Geometry {
         points.add(new Point(0, this.size.height()));
         return new JTSPolygon(points);
     }
+
+    @Override
+    public int id() {
+        return this.id;
+    }
 }
