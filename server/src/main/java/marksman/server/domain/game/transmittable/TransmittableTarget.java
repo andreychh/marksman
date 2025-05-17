@@ -1,10 +1,10 @@
 package marksman.server.domain.game.transmittable;
 
+import marksman.server.domain.game.JTSPolygon;
 import marksman.server.domain.game.Target;
 import marksman.shared.geometry.Point;
 import marksman.shared.network.messaging.Message;
 import marksman.shared.network.messaging.MessageSender;
-import org.locationtech.jts.geom.Polygon;
 
 public final class TransmittableTarget implements Target {
     private final Target origin;
@@ -40,12 +40,7 @@ public final class TransmittableTarget implements Target {
     }
 
     @Override
-    public Polygon polygon() {
+    public JTSPolygon polygon() {
         return this.origin.polygon();
-    }
-
-    @Override
-    public String toString() {
-        return this.origin.toString();
     }
 }

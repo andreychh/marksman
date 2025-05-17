@@ -1,13 +1,11 @@
 package marksman.server.domain.game.memory;
 
+import marksman.server.domain.game.JTSPolygon;
 import marksman.server.domain.game.Target;
 import marksman.shared.geometry.Point;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.Polygon;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class MemoryTarget implements Target {
     private final int id;
@@ -39,23 +37,16 @@ public final class MemoryTarget implements Target {
     }
 
     @Override
-    public Polygon polygon() {
-        Coordinate[] coordinates = new Coordinate[10 + 1];
+    public JTSPolygon polygon() {
+        List<Point> points = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             double angle = 2 * Math.PI * i / 10;
-            double x = this.center().x() + this.radius() * Math.cos(angle);
-            double y = this.center().y() + this.radius() * Math.sin(angle);
-            coordinates[i] = new Coordinate(x, y);
+            points.add(new Point(
+                    this.center().x() + this.radius() * Math.cos(angle),
+                    this.center().y() + this.radius() * Math.sin(angle)
+            ));
         }
-        coordinates[10] = coordinates[0];
-        return new GeometryFactory().createPolygon(coordinates);
-    }
-
-    @Override
-    public String toString() {
-        return Arrays.stream(this.polygon().getCoordinates())
-                .map(c -> new Point(c.x, c.y).toString())
-                .collect(Collectors.joining("%"));
+        return new JTSPolygon(points);
     }
 
     private double radius() {

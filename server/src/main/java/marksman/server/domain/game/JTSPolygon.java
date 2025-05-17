@@ -6,6 +6,7 @@ import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Polygon;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public final class JTSPolygon {
     private final List<Point> points;
@@ -24,7 +25,7 @@ public final class JTSPolygon {
 
     private Polygon polygon() {
         return new GeometryFactory().createPolygon(
-                this.points.stream()
+                Stream.concat(this.points.stream(), Stream.of(this.points.getFirst()))
                         .map(p -> new Coordinate(p.x(), p.y()))
                         .toArray(Coordinate[]::new)
         );

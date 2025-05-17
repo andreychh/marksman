@@ -1,9 +1,7 @@
 package marksman.server.domain.game;
 
-import org.locationtech.jts.geom.Polygon;
-
 public interface Geometry {
-    Polygon polygon();
+    JTSPolygon polygon();
 
     default boolean intersects(Geometry geometry) {
         return this.polygon().intersects(geometry.polygon());
