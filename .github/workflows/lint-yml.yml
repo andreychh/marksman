@@ -2,10 +2,10 @@ name: lint-yml
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 jobs:
   lint-yml:
     timeout-minutes: 15
