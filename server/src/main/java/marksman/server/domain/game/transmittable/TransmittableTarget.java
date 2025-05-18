@@ -1,6 +1,6 @@
 package marksman.server.domain.game.transmittable;
 
-import marksman.server.domain.game.JTSPolygon;
+import marksman.server.domain.game.Polygon;
 import marksman.server.domain.game.Target;
 import marksman.server.domain.game.events.GeometryMovedEvent;
 import marksman.shared.geometry.Point;
@@ -42,7 +42,7 @@ public final class TransmittableTarget implements Target {
     }
 
     @Override
-    public JTSPolygon polygon() {
+    public Polygon polygon() {
         return this.origin.polygon();
     }
 }

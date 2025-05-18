@@ -1,6 +1,6 @@
 package marksman.server.domain.game.memory;
 
-import marksman.server.domain.game.JTSPolygon;
+import marksman.server.domain.game.Polygon;
 import marksman.server.domain.game.Target;
 import marksman.shared.geometry.Point;
 
@@ -50,7 +50,7 @@ public final class MemoryTarget implements Target {
     }
 
     @Override
-    public JTSPolygon polygon() {
+    public Polygon polygon() {
         List<Point> points = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             double angle = 2 * Math.PI * i / 10;
@@ -60,6 +60,6 @@ public final class MemoryTarget implements Target {
                     this.center.y() + this.radius * Math.sin(angle)
             ));
         }
-        return new JTSPolygon(points);
+        return new Polygon(points);
     }
 }

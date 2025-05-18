@@ -12,6 +12,6 @@ public final class Identifiers {
     }
 
     public int next() {
-        return counter++;
+        return ++counter;
     }
 }

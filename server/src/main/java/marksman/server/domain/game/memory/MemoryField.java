@@ -1,7 +1,7 @@
 package marksman.server.domain.game.memory;
 
 import marksman.server.domain.game.Geometry;
-import marksman.server.domain.game.JTSPolygon;
+import marksman.server.domain.game.Polygon;
 import marksman.shared.geometry.Point;
 import marksman.shared.geometry.Size;
 
@@ -28,13 +28,13 @@ public final class MemoryField implements Geometry {
     }
 
     @Override
-    public JTSPolygon polygon() {
+    public Polygon polygon() {
         List<Point> points = new ArrayList<>();
         points.add(new Point(0, 0));
         points.add(new Point(this.size.width(), 0));
         points.add(new Point(this.size.width(), this.size.height()));
         points.add(new Point(0, this.size.height()));
-        return new JTSPolygon(points);
+        return new Polygon(points);
     }
 
     @Override

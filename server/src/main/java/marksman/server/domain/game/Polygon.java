@@ -5,27 +5,26 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.Polygon;
 
 import java.util.List;
 import java.util.stream.Stream;
 
-public final class JTSPolygon {
+public final class Polygon {
     private final List<Point> points;
 
-    public JTSPolygon(final List<Point> points) {
+    public Polygon(final List<Point> points) {
         this.points = points;
     }
 
-    public boolean intersects(final JTSPolygon other) {
+    public boolean intersects(final Polygon other) {
         return this.polygon().intersects(other.polygon());
     }
 
-    public boolean contains(final JTSPolygon other) {
+    public boolean contains(final Polygon other) {
         return this.polygon().contains(other.polygon());
     }
 
-    private Polygon polygon() {
+    private org.locationtech.jts.geom.Polygon polygon() {
         return new GeometryFactory().createPolygon(
                 Stream.concat(this.points.stream(), Stream.of(this.points.getFirst()))
                         .map(p -> new Coordinate(p.x(), p.y()))
