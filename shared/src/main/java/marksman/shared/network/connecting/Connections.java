@@ -3,6 +3,7 @@ package marksman.shared.network.connecting;
 import marksman.shared.network.messaging.MessageSender;
 import marksman.shared.network.messaging.SendableMessage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Connections implements MessageSender {
@@ -10,6 +11,10 @@ public final class Connections implements MessageSender {
 
     public Connections(final List<Connection> connections) {
         this.connections = connections;
+    }
+
+    public Connections() {
+        this(new ArrayList<>());
     }
 
     public void add(final Connection connection) {

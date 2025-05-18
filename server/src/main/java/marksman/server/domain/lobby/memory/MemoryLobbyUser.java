@@ -29,9 +29,9 @@ public final class MemoryLobbyUser implements LobbyUser {
 
     @Override
     public Element serialize() {
-        Element userElement = org.dom4j.DocumentHelper.createElement("user");
-        userElement.addElement("name").addText(this.name);
-        userElement.addElement("readiness").addText(String.valueOf(this.isReady));
-        return userElement;
+        Element element = org.dom4j.DocumentHelper.createElement("user");
+        element.addElement("name").addText(this.name);
+        element.addElement("readiness").addText(String.valueOf(this.isReady));
+        return element;
     }
 }

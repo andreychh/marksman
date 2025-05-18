@@ -5,6 +5,7 @@ import marksman.server.domain.lobby.LobbyUsers;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class MemoryLobbyUsers implements LobbyUsers {
@@ -15,7 +16,7 @@ public final class MemoryLobbyUsers implements LobbyUsers {
     }
 
     public MemoryLobbyUsers() {
-        this(List.of());
+        this(new ArrayList<>());
     }
 
     @Override
