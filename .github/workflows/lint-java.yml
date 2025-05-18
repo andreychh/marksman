@@ -1,4 +1,4 @@
-name: lint-java
+name: lint java
 on:
   push:
     branches:

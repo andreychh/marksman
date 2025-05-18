@@ -1,4 +1,4 @@
-name: verify-maven
+name: verify maven
 on:
   push:
     branches:

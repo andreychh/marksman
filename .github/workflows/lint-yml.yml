@@ -1,4 +1,4 @@
-name: lint-yml
+name: lint yml
 on:
   push:
     branches:
@@ -14,4 +14,4 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ibiqlik/action-yamllint@v3
         with:
-          config_file: .github/workflows/yamllint.yaml
+          config_file: .github/.yamllint.yml
