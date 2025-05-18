@@ -2,7 +2,7 @@ package marksman.server.domain.game.transmittable;
 
 import marksman.server.domain.game.Target;
 import marksman.server.domain.game.Targets;
-import marksman.shared.network.messaging.Message;
+import marksman.server.domain.game.events.GeometryAddedEvent;
 import marksman.shared.network.messaging.MessageSender;
 
 import java.util.Iterator;
@@ -19,10 +19,7 @@ public final class TransmittableTargets implements Targets {
     @Override
     public Target add(final Target target) {
         Target added = new TransmittableTarget(this.origin.add(target), this.sender);
-        this.sender.sendMessage(new Message()
-                .with("action", "geometry.added")
-                .with("geometry.center", added.center().toString())
-                .with("geometry.points", added.toString()));
+        new GeometryAddedEvent(added).sendTo(this.sender);
         return added;
     }
 

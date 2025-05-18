@@ -1,5 +1,7 @@
 package marksman.server.domain.game;
 
+import marksman.shared.geometry.Point;
+
 public interface Geometry {
     JTSPolygon polygon();
 
@@ -12,4 +14,6 @@ public interface Geometry {
     }
 
     int id();
+
+    Point center();
 }

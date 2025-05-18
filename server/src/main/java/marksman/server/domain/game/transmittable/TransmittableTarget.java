@@ -2,8 +2,8 @@ package marksman.server.domain.game.transmittable;
 
 import marksman.server.domain.game.JTSPolygon;
 import marksman.server.domain.game.Target;
+import marksman.server.domain.game.events.GeometryMovedEvent;
 import marksman.shared.geometry.Point;
-import marksman.shared.network.messaging.Message;
 import marksman.shared.network.messaging.MessageSender;
 
 public final class TransmittableTarget implements Target {
@@ -18,10 +18,7 @@ public final class TransmittableTarget implements Target {
     @Override
     public void move() {
         this.origin.move();
-        this.sender.sendMessage(new Message()
-                .with("action", "geometry.moved")
-                .with("geometry.id", String.valueOf(this.id()))
-                .with("geometry.center", this.center().toString()));
+        new GeometryMovedEvent(this.origin).sendTo(this.sender);
     }
 
     @Override

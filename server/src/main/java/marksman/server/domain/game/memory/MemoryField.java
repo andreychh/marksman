@@ -41,4 +41,9 @@ public final class MemoryField implements Geometry {
     public int id() {
         return this.id;
     }
+
+    @Override
+    public Point center() {
+        return this.center;
+    }
 }

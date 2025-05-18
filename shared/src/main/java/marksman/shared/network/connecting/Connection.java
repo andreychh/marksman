@@ -34,6 +34,16 @@ public final class Connection implements AutoCloseable, MessageSender {
     }
 
     @Override
+    public void sendString(final String string) {
+        try {
+            this.socket.getOutputStream().write(string.getBytes());
+            this.socket.getOutputStream().flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e); // todo: Handle exception
+        }
+    }
+
+    @Override
     public void close() {
         try {
             this.socket.close();

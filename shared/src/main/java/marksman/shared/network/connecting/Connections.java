@@ -24,4 +24,9 @@ public final class Connections implements MessageSender {
     public void sendMessage(final SendableMessage message) {
         this.connections.forEach(c -> c.sendMessage(message));
     }
+
+    @Override
+    public void sendString(final String string) {
+        this.connections.forEach(c -> c.sendString(string));
+    }
 }
