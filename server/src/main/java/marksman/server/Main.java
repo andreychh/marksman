@@ -31,7 +31,8 @@ public final class Main {
         LobbyUsers lobby = new TransmittableLobbyUsers(new MemoryLobbyUsers(), connections);
 
         messageBus.addHandler("app.connect", (message, connection) -> {
-            new ScreenChangedEvent(new LoginScreen(new LoginUser(String.valueOf(connection.hashCode())))).sendTo(connection);
+            new ScreenChangedEvent(new LoginScreen(new LoginUser(String.valueOf(connection.hashCode()))))
+                    .sendTo(connection);
         });
 
         messageBus.addHandler("user.joinLobby", (message, connection) -> {
