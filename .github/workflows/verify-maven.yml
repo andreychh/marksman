@@ -10,11 +10,11 @@ jobs:
   verify-maven:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-24.04, windows-2022]
         include:
-          - os: ubuntu-latest
+          - os: ubuntu-24.04
             maven_command: "./mvnw"
-          - os: windows-latest
+          - os: windows-2022
             maven_command: "./mvnw.cmd"
     runs-on: ${{ matrix.os }}
     steps:
