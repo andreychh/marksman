@@ -17,4 +17,5 @@ jobs:
           java-version: 23
           distribution: temurin
           cache: maven
-      - run: ./mvnw checkstyle:check
+      - name: Run Checkstyle
+        run: ./mvnw checkstyle:check
