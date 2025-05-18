@@ -2,9 +2,10 @@ package marksman.server.domain.lobby.memory;
 
 import marksman.server.domain.lobby.LobbyUser;
 import marksman.server.domain.lobby.LobbyUsers;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public final class MemoryLobbyUsers implements LobbyUsers {
     private final List<LobbyUser> users;
@@ -13,10 +14,12 @@ public final class MemoryLobbyUsers implements LobbyUsers {
         this.users = users;
     }
 
+    public MemoryLobbyUsers() {
+        this(List.of());
+    }
 
     @Override
-    public LobbyUser add(final String name, final boolean isReady) {
-        MemoryLobbyUser user = new MemoryLobbyUser(name, isReady);
+    public LobbyUser add(final LobbyUser user) {
         this.users.add(user);
         return user;
     }
@@ -29,14 +32,9 @@ public final class MemoryLobbyUsers implements LobbyUsers {
     @Override
     public LobbyUser get(final String name) {
         return this.users.stream()
-                .filter(user -> user.name().equals(name))
+                .filter(u -> u.name().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + name));
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return this.users.isEmpty();
     }
 
     @Override
@@ -45,13 +43,9 @@ public final class MemoryLobbyUsers implements LobbyUsers {
     }
 
     @Override
-    public String toString() {
-        if (this.users.isEmpty()) {
-            return "null";
-        }
-        return this.users
-                .stream()
-                .map(LobbyUser::toString)
-                .collect(Collectors.joining("%"));
+    public Element serialize() {
+        Element element = DocumentHelper.createElement("users");
+        this.users.forEach(u -> element.add(u.serialize()));
+        return element;
     }
 }

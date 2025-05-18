@@ -16,7 +16,7 @@ public final class GeometryMovedEvent {
         Element eventElement = DocumentHelper.createElement("event");
         eventElement.addElement("action").addText("geometry.moved");
         Element geomElement = eventElement.addElement("geometry");
-        geomElement.addElement("center").addText(String.valueOf(geometry.center()));
+        geomElement.addElement("center").add(geometry.center().serialize());
         return eventElement;
     }
 

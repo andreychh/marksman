@@ -4,6 +4,7 @@ import marksman.server.domain.lobby.LobbyUser;
 import marksman.server.domain.lobby.LobbyUsers;
 import marksman.shared.network.messaging.Message;
 import marksman.shared.network.messaging.MessageSender;
+import org.dom4j.Element;
 
 public final class TransmittableLobbyUsers implements LobbyUsers {
     private final LobbyUsers origin;
@@ -15,13 +16,13 @@ public final class TransmittableLobbyUsers implements LobbyUsers {
     }
 
     @Override
-    public LobbyUser add(final String name, final boolean isReady) {
-        TransmittableLobbyUser user = new TransmittableLobbyUser(this.origin.add(name, isReady), this.sender);
+    public LobbyUser add(final LobbyUser user) {
+        LobbyUser added = new TransmittableLobbyUser(this.origin.add(user), this.sender);
         this.sender.sendMessage(new Message()
                 .with("action", "lobby.userAdded")
                 .with("user.name", user.name())
                 .with("user.readiness", String.valueOf(user.isReady())));
-        return user;
+        return added;
     }
 
     @Override
@@ -38,17 +39,12 @@ public final class TransmittableLobbyUsers implements LobbyUsers {
     }
 
     @Override
-    public boolean isEmpty() {
-        return this.origin.isEmpty();
-    }
-
-    @Override
     public boolean isReady() {
         return this.origin.isReady();
     }
 
     @Override
-    public String toString() {
-        return this.origin.toString();
+    public Element serialize() {
+        return this.origin.serialize();
     }
 }

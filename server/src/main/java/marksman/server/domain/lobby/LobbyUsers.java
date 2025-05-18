@@ -1,13 +1,15 @@
 package marksman.server.domain.lobby;
 
+import org.dom4j.Element;
+
 public interface LobbyUsers {
-    LobbyUser add(String name, boolean isReady);
+    LobbyUser add(LobbyUser user);
 
     void remove(String name);
 
     LobbyUser get(String name);
 
-    boolean isEmpty();
-
     boolean isReady();
+
+    Element serialize();
 }

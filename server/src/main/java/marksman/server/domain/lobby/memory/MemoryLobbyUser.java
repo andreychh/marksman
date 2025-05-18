@@ -1,6 +1,7 @@
 package marksman.server.domain.lobby.memory;
 
 import marksman.server.domain.lobby.LobbyUser;
+import org.dom4j.Element;
 
 public final class MemoryLobbyUser implements LobbyUser {
     private final String name;
@@ -27,7 +28,10 @@ public final class MemoryLobbyUser implements LobbyUser {
     }
 
     @Override
-    public String toString() {
-        return String.format("%s~%s", name, isReady);
+    public Element serialize() {
+        Element userElement = org.dom4j.DocumentHelper.createElement("user");
+        userElement.addElement("name").addText(this.name);
+        userElement.addElement("readiness").addText(String.valueOf(this.isReady));
+        return userElement;
     }
 }

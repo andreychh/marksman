@@ -3,6 +3,7 @@ package marksman.server.domain.lobby.transmittable;
 import marksman.server.domain.lobby.LobbyUser;
 import marksman.shared.network.messaging.Message;
 import marksman.shared.network.messaging.MessageSender;
+import org.dom4j.Element;
 
 public final class TransmittableLobbyUser implements LobbyUser {
     private final LobbyUser origin;
@@ -34,7 +35,7 @@ public final class TransmittableLobbyUser implements LobbyUser {
     }
 
     @Override
-    public String toString() {
-        return this.origin.toString();
+    public Element serialize() {
+        return this.origin.serialize();
     }
 }
