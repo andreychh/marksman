@@ -2,16 +2,16 @@ package marksman.server.domain.lobby.transmittable;
 
 import marksman.server.domain.lobby.LobbyUser;
 import marksman.server.domain.lobby.LobbyUsers;
-import marksman.server.domain.lobby.events.UserAddedEvent;
-import marksman.server.domain.lobby.events.UserRemovedEvent;
-import marksman.shared.network.messaging.MessageSender;
+import marksman.server.domain.lobby.events.UserJoinedLobbyEvent;
+import marksman.server.domain.lobby.events.UserLeftLobbyEvent;
+import marksman.shared.network.connecting.StringSender;
 import org.dom4j.Element;
 
 public final class TransmittableLobbyUsers implements LobbyUsers {
     private final LobbyUsers origin;
-    private final MessageSender sender;
+    private final StringSender sender;
 
-    public TransmittableLobbyUsers(final LobbyUsers origin, final MessageSender sender) {
+    public TransmittableLobbyUsers(final LobbyUsers origin, final StringSender sender) {
         this.origin = origin;
         this.sender = sender;
     }
@@ -19,14 +19,14 @@ public final class TransmittableLobbyUsers implements LobbyUsers {
     @Override
     public LobbyUser add(final LobbyUser user) {
         LobbyUser added = new TransmittableLobbyUser(this.origin.add(user), this.sender);
-        new UserAddedEvent(added).sendTo(this.sender);
+        new UserJoinedLobbyEvent(added).sendTo(this.sender);
         return added;
     }
 
     @Override
     public void remove(final String name) {
         this.origin.remove(name);
-        new UserRemovedEvent(name).sendTo(this.sender);
+        new UserLeftLobbyEvent(name).sendTo(this.sender);
     }
 
     @Override

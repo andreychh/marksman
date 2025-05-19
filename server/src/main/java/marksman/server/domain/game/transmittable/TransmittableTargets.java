@@ -3,15 +3,15 @@ package marksman.server.domain.game.transmittable;
 import marksman.server.domain.game.Target;
 import marksman.server.domain.game.Targets;
 import marksman.server.domain.game.events.GeometryAddedEvent;
-import marksman.shared.network.messaging.MessageSender;
+import marksman.shared.network.connecting.StringSender;
 
 import java.util.Iterator;
 
 public final class TransmittableTargets implements Targets {
     private final Targets origin;
-    private final MessageSender sender;
+    private final StringSender sender;
 
-    public TransmittableTargets(final Targets origin, final MessageSender sender) {
+    public TransmittableTargets(final Targets origin, final StringSender sender) {
         this.origin = origin;
         this.sender = sender;
     }

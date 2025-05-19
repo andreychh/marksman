@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import marksman.client.lobby.player.Player;
-import marksman.shared.network.connecting.Connection;
+import marksman.shared.network.connecting.StringSender;
 import marksman.shared.network.messaging.MessageReceiver;
 import marksman.shared.network.messaging.ReceivedMessage;
 
@@ -38,19 +38,19 @@ public final class Players implements MessageReceiver {
     }
 
     @Override
-    public void receiveMessage(final ReceivedMessage message, final Connection connection) {
-        switch (message.value("action")) {
-            case "lobby.userAdded" -> {
-                this.add(message.value("user.name"), Boolean.parseBoolean(message.value("user.readiness")));
+    public void receiveMessage(final ReceivedMessage message, final StringSender sender) {
+        switch (message.value("event/action")) {
+            case "user.joinedLobby" -> {
+                this.add(message.value("event/user/name"), Boolean.parseBoolean(message.value("event/user/readiness")));
             }
-            case "lobby.userRemoved" -> {
-                this.remove(message.value("user.name"));
+            case "user.leftLobby" -> {
+                this.remove(message.value("event/user/name"));
             }
             case "user.readinessChanged" -> {
-                this.get(message.value("user.name")).receiveMessage(message, connection);
+                this.get(message.value("event/user/name")).receiveMessage(message, sender);
             }
             default -> {
-                throw new RuntimeException("Unknown action: " + message.value("action"));
+                throw new RuntimeException("Unknown action: %s".formatted(message.value("event/action")));
             }
         }
     }

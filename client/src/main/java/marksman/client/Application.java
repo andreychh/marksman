@@ -1,15 +1,15 @@
 package marksman.client;
 
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import marksman.client.events.ConnectEvent;
 import marksman.shared.network.connecting.Connection;
-import marksman.shared.network.messaging.LoggedMessageReceiver;
-import marksman.shared.network.messaging.Message;
+import marksman.shared.network.connecting.LoggedStringSender;
 import marksman.shared.network.messaging.MessageBus;
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -28,13 +28,12 @@ public final class Application extends javafx.application.Application {
         MessageBus messageBus = new MessageBus();
         Connection connection = new Connection(
                 this.connect(new InetSocketAddress("localhost", 12345), 5, 5000),
-                new LoggedMessageReceiver(messageBus)
+                messageBus
         );
-        connection.start();
+        connection.listen();
 
         Scene scene = new Scene(this.root(messageBus));
-        connection.sendMessage(new Message()
-                .with("action", "app.connect"));
+        new ConnectEvent().sendTo(new LoggedStringSender(connection));
 
         primaryStage.setTitle("Marksman");
         primaryStage.setResizable(false);
@@ -46,50 +45,74 @@ public final class Application extends javafx.application.Application {
     private Parent root(final MessageBus messageBus) {
         FXApp root = new FXApp(messageBus);
 
-        messageBus.addHandler("app.screenChanged", (message, connection) -> {
-            switch (message.value("screen.name")) {
+        messageBus.addHandler("screen.changed", (message, sender) -> {
+            switch (message.value("event/screen/name")) {
                 case "login" -> {
                     root.loginScreen(
                             new marksman.client.login.user.User(
-                                    connection,
-                                    message.value("user.name")
+                                    sender,
+                                    message.value("event/screen/user/name")
                             )
                     );
                 }
                 case "lobby" -> {
-                    root.lobbyScreen(
-                            new marksman.client.lobby.user.User(
-                                    connection,
-                                    new SimpleStringProperty(message.value("user.name")),
-                                    new SimpleBooleanProperty(Boolean.parseBoolean(message.value("user.readiness")))
-                            ),
-                            new marksman.client.lobby.players.Players(
-                                    FXCollections.observableArrayList(
-                                            new marksman.client.lobby.players.InputAsPlayers(
-                                                    message.value("lobby.users")
-                                            ).players()
-                                    )
-                            )
-                    );
+                    try {
+                        root.lobbyScreen(
+                                new marksman.client.lobby.user.User(
+                                        sender,
+                                        message.value("event/screen/user/name"),
+                                        Boolean.parseBoolean(message.value("event/screen/user/readiness"))
+                                ),
+                                new marksman.client.lobby.players.Players(
+                                        FXCollections.observableArrayList(
+                                                DocumentHelper.parseText(message.value("event/screen/users"))
+                                                        .selectNodes("users/user")
+                                                        .stream().map(node -> new marksman.client.lobby.player.Player(
+                                                                node.selectSingleNode("name").getText(),
+                                                                Boolean.parseBoolean(
+                                                                        node.selectSingleNode("readiness").getText()
+                                                                )
+                                                        ))
+                                                        .toList()
+                                        )
+                                )
+                        );
+                    } catch (DocumentException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 case "game" -> {
-                    root.gameScreen(
-                            new marksman.client.game.user.User(
-                                    connection,
-                                    new SimpleStringProperty(message.value("user.name"))
-                            ),
-                            new marksman.client.game.players.Players(
-                                    FXCollections.observableArrayList(
-                                            new marksman.client.game.players.InputAsPlayers(
-                                                    message.value("game.users")
-                                            ).players()
-                                    )
-                            ),
-                            new marksman.client.game.field.Field()
-                    );
+                    try {
+                        root.gameScreen(
+                                new marksman.client.game.user.User(
+                                        sender,
+                                        message.value("event/user/name")
+                                ),
+                                new marksman.client.game.players.Players(
+                                        FXCollections.observableArrayList(
+                                                DocumentHelper.parseText(message.value("event/screen/users"))
+                                                        .selectNodes("users/user")
+                                                        .stream()
+                                                        .map(node -> new marksman.client.game.player.Player(
+                                                                node.selectSingleNode("name").getText(),
+                                                                Integer.parseInt(
+                                                                        node.selectSingleNode("shoots").getText()
+                                                                ),
+                                                                Integer.parseInt(
+                                                                        node.selectSingleNode("hits").getText()
+                                                                )
+                                                        ))
+                                                        .toList()
+                                        )
+                                ),
+                                new marksman.client.game.field.Field()
+                        );
+                    } catch (DocumentException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 default -> {
-                    throw new IllegalArgumentException("Unknown screen: " + message.value("screen.name"));
+                    throw new IllegalArgumentException("Unknown screen: " + message.value("event/screen/name"));
                 }
             }
         });

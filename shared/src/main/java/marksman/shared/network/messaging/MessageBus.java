@@ -1,6 +1,6 @@
 package marksman.shared.network.messaging;
 
-import marksman.shared.network.connecting.Connection;
+import marksman.shared.network.connecting.StringSender;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,11 +25,11 @@ public final class MessageBus implements MessageReceiver {
     }
 
     @Override
-    public void receiveMessage(final ReceivedMessage message, final Connection connection) {
-        String action = message.value("action");
+    public void receiveMessage(final ReceivedMessage message, final StringSender sender) {
+        String action = message.value("event/action");
         if (!handlers.containsKey(action)) {
             return;
         }
-        handlers.get(action).forEach(h -> h.receiveMessage(message, connection));
+        handlers.get(action).forEach(h -> h.receiveMessage(message, sender));
     }
 }

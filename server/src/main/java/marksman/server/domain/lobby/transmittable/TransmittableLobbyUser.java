@@ -2,14 +2,14 @@ package marksman.server.domain.lobby.transmittable;
 
 import marksman.server.domain.lobby.LobbyUser;
 import marksman.server.domain.lobby.events.UserReadinessChangedEvent;
-import marksman.shared.network.messaging.MessageSender;
+import marksman.shared.network.connecting.StringSender;
 import org.dom4j.Element;
 
 public final class TransmittableLobbyUser implements LobbyUser {
     private final LobbyUser origin;
-    private final MessageSender sender;
+    private final StringSender sender;
 
-    public TransmittableLobbyUser(final LobbyUser origin, final MessageSender sender) {
+    public TransmittableLobbyUser(final LobbyUser origin, final StringSender sender) {
         this.origin = origin;
         this.sender = sender;
     }

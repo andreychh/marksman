@@ -2,37 +2,42 @@ package marksman.client.lobby.user;
 
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import marksman.shared.network.connecting.Connection;
-import marksman.shared.network.messaging.Message;
+import marksman.client.lobby.events.UserLeaveLobbyEvent;
+import marksman.client.lobby.events.UserToggleReadinessEvent;
+import marksman.shared.network.connecting.StringSender;
 import marksman.shared.network.messaging.MessageReceiver;
 import marksman.shared.network.messaging.ReceivedMessage;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 
 public final class User implements MessageReceiver {
-    private final Connection connection;
+    private final StringSender sender;
     private final StringProperty nameProperty;
     private final BooleanProperty readinessProperty;
 
     public User(
-            final Connection connection,
+            final StringSender sender,
             final StringProperty nameProperty,
             final BooleanProperty readinessProperty
     ) {
-        this.connection = connection;
+        this.sender = sender;
         this.nameProperty = nameProperty;
         this.readinessProperty = readinessProperty;
     }
 
+    public User(final StringSender sender, final String name, final boolean readiness) {
+        this(sender, new SimpleStringProperty(name), new SimpleBooleanProperty(readiness));
+    }
+
     public void toggleReadiness() {
-        this.connection.sendMessage(new Message()
-                .with("action", "user.toggleReadiness")
-                .with("user.name", this.nameProperty.get()));
+        new UserToggleReadinessEvent(this).sendTo(this.sender);
     }
 
     public void leaveLobby() {
-        this.connection.sendMessage(new Message()
-                .with("action", "user.leaveLobby")
-                .with("user.name", this.nameProperty.get()));
+        new UserLeaveLobbyEvent(this).sendTo(this.sender);
     }
 
     public BooleanProperty readinessProperty() {
@@ -40,18 +45,24 @@ public final class User implements MessageReceiver {
     }
 
     @Override
-    public void receiveMessage(final ReceivedMessage message, final Connection connection) {
-        switch (message.value("action")) {
+    public void receiveMessage(final ReceivedMessage message, final StringSender sender) {
+        switch (message.value("event/action")) {
             case "user.readinessChanged" -> {
-                if (!message.value("user.name").equals(this.nameProperty.get())) {
+                if (!message.value("event/user/name").equals(this.nameProperty.get())) {
                     break;
                 }
-                boolean readiness = Boolean.parseBoolean(message.value("user.readiness"));
+                boolean readiness = Boolean.parseBoolean(message.value("event/user/readiness"));
                 Platform.runLater(() -> this.readinessProperty.set(readiness));
             }
             default -> {
-                throw new RuntimeException("Unknown action: " + message.value("action"));
+                throw new RuntimeException("Unknown action: %s".formatted(message.value("event/action")));
             }
         }
+    }
+
+    public Element serialize() {
+        Element userElement = DocumentHelper.createElement("user");
+        userElement.addElement("name").addText(this.nameProperty.get());
+        return userElement;
     }
 }

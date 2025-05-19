@@ -2,7 +2,7 @@ package marksman.client.game.players;
 
 import javafx.collections.ObservableList;
 import marksman.client.game.player.Player;
-import marksman.shared.network.connecting.Connection;
+import marksman.shared.network.connecting.StringSender;
 import marksman.shared.network.messaging.MessageReceiver;
 import marksman.shared.network.messaging.ReceivedMessage;
 
@@ -25,13 +25,13 @@ public final class Players implements MessageReceiver {
     }
 
     @Override
-    public void receiveMessage(final ReceivedMessage message, final Connection connection) {
-        switch (message.value("action")) {
+    public void receiveMessage(final ReceivedMessage message, final StringSender sender) {
+        switch (message.value("event/action")) {
             case "user.updateShoots", "user.updateHits" -> {
-                this.get(message.value("user.name")).receiveMessage(message, connection);
+                this.get(message.value("event/user/name")).receiveMessage(message, sender);
             }
             default -> {
-                throw new RuntimeException("Unknown action: " + message.value("action"));
+                throw new RuntimeException("Unknown action: %s".formatted(message.value("event/action")));
             }
         }
     }

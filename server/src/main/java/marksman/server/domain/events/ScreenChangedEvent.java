@@ -1,11 +1,12 @@
 package marksman.server.domain.events;
 
 import marksman.server.domain.Screen;
-import marksman.shared.network.messaging.MessageSender;
+import marksman.shared.network.connecting.StringSender;
+import marksman.shared.network.messaging.Event;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
-public final class ScreenChangedEvent {
+public final class ScreenChangedEvent implements Event {
     private final Screen screen;
 
     public ScreenChangedEvent(final Screen screen) {
@@ -19,7 +20,7 @@ public final class ScreenChangedEvent {
         return eventElement;
     }
 
-    public void sendTo(final MessageSender sender) {
+    public void sendTo(final StringSender sender) {
         sender.sendString(this.serialize().asXML());
     }
 }
