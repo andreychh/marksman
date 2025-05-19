@@ -2,15 +2,13 @@ package marksman.shared.network.connecting;
 
 import marksman.shared.network.messaging.InputAsMessage;
 import marksman.shared.network.messaging.MessageReceiver;
-import marksman.shared.network.messaging.MessageSender;
-import marksman.shared.network.messaging.SendableMessage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-public final class Connection implements AutoCloseable, MessageSender {
+public final class Connection implements AutoCloseable, StringSender {
     private final Socket socket;
     private final MessageReceiver receiver;
 
@@ -19,24 +17,14 @@ public final class Connection implements AutoCloseable, MessageSender {
         this.receiver = receiver;
     }
 
-    public void start() {
+    public void listen() {
         new Thread(this::loop).start();
-    }
-
-    @Override
-    public void sendMessage(final SendableMessage message) {
-        try {
-            this.socket.getOutputStream().write(message.content().getBytes());
-            this.socket.getOutputStream().flush();
-        } catch (IOException e) {
-            throw new RuntimeException(e); // todo: Handle exception
-        }
     }
 
     @Override
     public void sendString(final String string) {
         try {
-            this.socket.getOutputStream().write(string.getBytes());
+            this.socket.getOutputStream().write((string + "\n").getBytes());
             this.socket.getOutputStream().flush();
         } catch (IOException e) {
             throw new RuntimeException(e); // todo: Handle exception
@@ -59,7 +47,7 @@ public final class Connection implements AutoCloseable, MessageSender {
                 if (line == null) {
                     break;
                 }
-                receiver.receiveMessage(new InputAsMessage(line).message(), this);
+                receiver.receiveMessage(new InputAsMessage(line),  new LoggedStringSender(this));
             }
         } catch (IOException e) {
             throw new RuntimeException(e); // todo: Handle exception

@@ -9,8 +9,8 @@ import java.util.List;
 
 public final class MemoryTarget implements Target {
     private final int id;
-    private Point center;
     private final double radius;
+    private Point center;
     private Point direction;
 
     private MemoryTarget(final int id, final Point center, final double radius, final Point direction) {

@@ -1,21 +1,21 @@
-package marksman.server.domain.lobby.events;
+package marksman.client.lobby.events;
 
-import marksman.server.domain.lobby.LobbyUser;
+import marksman.client.lobby.user.User;
 import marksman.shared.network.connecting.StringSender;
 import marksman.shared.network.messaging.Event;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
-public final class UserReadinessChangedEvent implements Event {
-    private final LobbyUser user;
+public final class UserToggleReadinessEvent implements Event {
+    private final User user;
 
-    public UserReadinessChangedEvent(final LobbyUser user) {
+    public UserToggleReadinessEvent(final User user) {
         this.user = user;
     }
 
-    public Element serialize() {
+    private Element serialize() {
         Element eventElement = DocumentHelper.createElement("event");
-        eventElement.addElement("action").addText("user.readinessChanged");
+        eventElement.addElement("action").addText("user.toggleReadiness");
         eventElement.add(this.user.serialize());
         return eventElement;
     }

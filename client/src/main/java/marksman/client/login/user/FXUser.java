@@ -34,10 +34,8 @@ public final class FXUser implements FXController, Initializable {
 
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
+        this.loginButton.disableProperty().bind(this.nameTextField.textProperty().isEmpty());
         this.nameTextField.setText(this.user.nameProperty().get());
-        this.loginButton.disableProperty().bind(
-                this.nameTextField.textProperty().isEmpty()
-        );
         this.nameTextField.requestFocus();
     }
 }

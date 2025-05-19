@@ -1,25 +1,34 @@
 package marksman.shared.network.messaging;
 
-import java.util.InputMismatchException;
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Node;
 
-// todo: rename
-public final class InputAsMessage {
+public final class InputAsMessage implements ReceivedMessage {
     private final String input;
 
     public InputAsMessage(final String input) {
         this.input = input;
     }
 
-    public ReceivedMessage message() {
-        Message message = new Message();
-        String[] pairs = this.input.split(";");
-        for (String pair : pairs) {
-            String[] keyValue = pair.split("=");
-            if (keyValue.length != 2) {
-                throw new InputMismatchException(String.format("Invalid pair format: '%s'", pair));
+    @Override
+    public String value(final String key) {
+        try {
+            System.out.println("Parsing input '" + this.input + "' with key '" + key + "'");
+            Node node = DocumentHelper.parseText(this.input).selectSingleNode(key);
+            if (node == null) {
+                throw new IllegalArgumentException("Key '%s' not found".formatted(key));
             }
-            message = message.with(keyValue[0], keyValue[1]);
+            String value;
+            if (node.getNodeType() == Node.ELEMENT_NODE && !node.getText().isEmpty()) {
+                value = node.getText();
+            } else {
+                value = node.asXML();
+            }
+            System.out.println("Parsed value: " + value);
+            return value;
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
         }
-        return message;
     }
 }

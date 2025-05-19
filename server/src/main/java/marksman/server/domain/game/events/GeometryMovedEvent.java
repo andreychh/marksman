@@ -1,11 +1,12 @@
 package marksman.server.domain.game.events;
 
 import marksman.server.domain.game.Geometry;
-import marksman.shared.network.messaging.MessageSender;
+import marksman.shared.network.connecting.StringSender;
+import marksman.shared.network.messaging.Event;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
-public final class GeometryMovedEvent {
+public final class GeometryMovedEvent implements Event {
     private final Geometry geometry;
 
     public GeometryMovedEvent(final Geometry geometry) {
@@ -20,7 +21,7 @@ public final class GeometryMovedEvent {
         return eventElement;
     }
 
-    public void sendTo(final MessageSender sender) {
+    public void sendTo(final StringSender sender) {
         sender.sendString(this.serialize().asXML());
     }
 }

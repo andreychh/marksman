@@ -1,8 +1,10 @@
 package marksman.client.game.player;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import marksman.shared.network.connecting.Connection;
+import marksman.shared.network.connecting.StringSender;
 import marksman.shared.network.messaging.MessageReceiver;
 import marksman.shared.network.messaging.ReceivedMessage;
 
@@ -21,6 +23,10 @@ public final class Player implements MessageReceiver {
         this.hitsProperty = hitsProperty;
     }
 
+    public Player(final String name, final int shoots, final int hits) {
+        this(new SimpleStringProperty(name), new SimpleIntegerProperty(shoots), new SimpleIntegerProperty(hits));
+    }
+
     public StringProperty nameProperty() {
         return this.nameProperty;
     }
@@ -34,16 +40,16 @@ public final class Player implements MessageReceiver {
     }
 
     @Override
-    public void receiveMessage(final ReceivedMessage message, final Connection connection) {
-        switch (message.value("action")) {
+    public void receiveMessage(final ReceivedMessage message, final StringSender sender) {
+        switch (message.value("event/action")) {
             case "user.updateShoots" -> {
-                this.shootsProperty.set(Integer.parseInt(message.value("user.shoots")));
+                this.shootsProperty.set(Integer.parseInt(message.value("event/user/shoots")));
             }
             case "user.updateHits" -> {
-                this.hitsProperty.set(Integer.parseInt(message.value("user.hits")));
+                this.hitsProperty.set(Integer.parseInt(message.value("event/user/hits")));
             }
             default -> {
-                throw new RuntimeException("Unknown action: " + message.value("action"));
+                throw new RuntimeException("Unknown action: %s".formatted(message.value("event/action")));
             }
         }
     }

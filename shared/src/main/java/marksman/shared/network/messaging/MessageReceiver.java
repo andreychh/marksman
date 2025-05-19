@@ -1,8 +1,7 @@
 package marksman.shared.network.messaging;
 
-import marksman.shared.network.connecting.Connection;
+import marksman.shared.network.connecting.StringSender;
 
-// todo: MessageReceiver has -er suffix
 public interface MessageReceiver {
-    void receiveMessage(ReceivedMessage message, Connection connection);
+    void receiveMessage(ReceivedMessage message, StringSender sender);
 }

@@ -1,37 +1,29 @@
 package marksman.shared.network.connecting;
 
-import marksman.shared.network.messaging.MessageSender;
-import marksman.shared.network.messaging.SendableMessage;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Connections implements MessageSender {
-    private final List<Connection> connections;
+public final class Connections implements StringSender {
+    private final List<StringSender> senders;
 
-    public Connections(final List<Connection> connections) {
-        this.connections = connections;
+    public Connections(final List<StringSender> senders) {
+        this.senders = senders;
     }
 
     public Connections() {
         this(new ArrayList<>());
     }
 
-    public void add(final Connection connection) {
-        this.connections.add(connection);
+    public void add(final StringSender sender) {
+        this.senders.add(sender);
     }
 
-    public void remove(final Connection connection) {
-        this.connections.remove(connection);
-    }
-
-    @Override
-    public void sendMessage(final SendableMessage message) {
-        this.connections.forEach(c -> c.sendMessage(message));
+    public void remove(final StringSender sender) {
+        this.senders.remove(sender);
     }
 
     @Override
     public void sendString(final String string) {
-        this.connections.forEach(c -> c.sendString(string));
+        this.senders.forEach(c -> c.sendString(string));
     }
 }

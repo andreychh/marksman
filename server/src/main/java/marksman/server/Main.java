@@ -21,7 +21,6 @@ import marksman.server.domain.login.user.LoginUser;
 import marksman.shared.geometry.Point;
 import marksman.shared.geometry.Size;
 import marksman.shared.network.connecting.Connections;
-import marksman.shared.network.messaging.Message;
 import marksman.shared.network.messaging.MessageBus;
 
 public final class Main {
@@ -30,35 +29,37 @@ public final class Main {
         Connections connections = new Connections();
         LobbyUsers lobby = new TransmittableLobbyUsers(new MemoryLobbyUsers(), connections);
 
-        messageBus.addHandler("app.connect", (message, connection) -> {
-            new ScreenChangedEvent(new LoginScreen(new LoginUser(String.valueOf(connection.hashCode()))))
-                    .sendTo(connection);
+        messageBus.addHandler("app.connect", (message, sender) -> {
+            new ScreenChangedEvent(new LoginScreen(new LoginUser(String.valueOf(sender.hashCode()))))
+                    .sendTo(sender);
         });
 
-        messageBus.addHandler("user.joinLobby", (message, connection) -> {
-            connections.add(connection);
-            LobbyUser user = lobby.add(new MemoryLobbyUser(message.value("user.name"), false));
-            new ScreenChangedEvent(new LobbyScreen(user, lobby)).sendTo(connection);
+        messageBus.addHandler("user.joinLobby", (message, sender) -> {
+            connections.add(sender);
+            LobbyUser user = lobby.add(new MemoryLobbyUser(message.value("event/user/name"), false));
+            new ScreenChangedEvent(new LobbyScreen(user, lobby))
+                    .sendTo(sender);
         });
 
-        messageBus.addHandler("user.leaveLobby", (message, connection) -> {
-            lobby.remove(message.value("user.name"));
-            connections.remove(connection);
-            new ScreenChangedEvent(new LoginScreen(new LoginUser(message.value("user.name")))).sendTo(connection);
+        messageBus.addHandler("user.leaveLobby", (message, sender) -> {
+            lobby.remove(message.value("event/user/name"));
+            connections.remove(sender);
+            new ScreenChangedEvent(new LoginScreen(new LoginUser(message.value("event/user/name"))))
+                    .sendTo(sender);
         });
 
-        messageBus.addHandler("user.toggleReadiness", (message, connection) -> {
-            lobby.get(message.value("user.name")).toggleReadiness();
+        messageBus.addHandler("user.toggleReadiness", (message, sender) -> {
+            lobby.get(message.value("event/user/name")).toggleReadiness();
 
             if (!lobby.isReady()) {
                 return;
             }
 
-            connections.sendMessage(new Message()
-                    .with("action", "app.screenChanged")
-                    .with("user.name", "USER")
-                    .with("game.users", "null")
-                    .with("screen.name", "game"));
+//            connections.sendMessage(new Message()
+//                    .with("action", "app.screenChanged")
+//                    .with("user.name", "USER")
+//                    .with("game.users", "null")
+//                    .with("screen.name", "game"));
 
             Identifiers identifiers = new Identifiers();
             Targets targets = new TransmittableTargets(new MemoryTargets(identifiers), connections);

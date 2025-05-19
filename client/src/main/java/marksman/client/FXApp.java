@@ -37,8 +37,8 @@ public final class FXApp implements FXController {
             final marksman.client.lobby.user.User user,
             final marksman.client.lobby.players.Players players
     ) {
-        this.messageBus.addHandler("lobby.userAdded", players);
-        this.messageBus.addHandler("lobby.userRemoved", players);
+        this.messageBus.addHandler("user.joinedLobby", players);
+        this.messageBus.addHandler("user.leftLobby", players);
         this.messageBus.addHandler("user.readinessChanged", players);
         this.messageBus.addHandler("user.readinessChanged", user);
 

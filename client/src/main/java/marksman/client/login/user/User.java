@@ -2,20 +2,22 @@ package marksman.client.login.user;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import marksman.shared.network.connecting.Connection;
-import marksman.shared.network.messaging.Message;
+import marksman.client.login.events.UserJoinLobbyEvent;
+import marksman.shared.network.connecting.StringSender;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 
 public final class User {
-    private final Connection connection;
+    private final StringSender sender;
     private final StringProperty nameProperty;
 
-    public User(final Connection connection, final StringProperty nameProperty) {
-        this.connection = connection;
+    public User(final StringSender sender, final StringProperty nameProperty) {
+        this.sender = sender;
         this.nameProperty = nameProperty;
     }
 
-    public User(final Connection connection, final String name) {
-        this(connection, new SimpleStringProperty(name));
+    public User(final StringSender sender, final String name) {
+        this(sender, new SimpleStringProperty(name));
     }
 
     public void rename(final String name) {
@@ -27,13 +29,16 @@ public final class User {
     }
 
     public void joinLobby() {
-        this.connection.sendMessage(new Message()
-                .with("action", "user.joinLobby")
-                .with("user.name", this.nameProperty.get())
-        );
+        new UserJoinLobbyEvent(this).sendTo(this.sender);
     }
 
     public StringProperty nameProperty() {
         return nameProperty;
+    }
+
+    public Element serialize() {
+        Element userElement = DocumentHelper.createElement("user");
+        userElement.addElement("name").addText(this.nameProperty.get());
+        return userElement;
     }
 }

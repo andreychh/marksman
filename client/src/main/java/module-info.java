@@ -2,6 +2,7 @@ module marksman.client {
     requires javafx.controls;
     requires javafx.fxml;
     requires marksman.shared;
+    requires org.dom4j;
 
     opens marksman.client to javafx.fxml;
 
